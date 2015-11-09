@@ -1,6 +1,23 @@
+class Combination(object):
+    def __init__(self, int amt):
+        self.map = Map()
+        self.houses = []
+        createHouseList(amt)
+
+    def createHouseList(int amt):
+        for x in range(0.6*amt):
+            self.houses.append(Eengezins())
+        for x in range(0.25*amt):
+            self.houses.append(Bungalow())
+        for x in range(0.15*amt):
+            self.houses.append(Villa())
+        for x in range(4):
+            self.houses.append(Water())
+
 class Point(object):
-    int x
-    int y
+    def __init__(self, int x, int y):
+        self.x = x
+        self.y = y
 
 class Checkpoint(Point):
     def __init__(self):
@@ -30,6 +47,7 @@ class House(object):
         float self.length = 0
         float self.width = 0
         bool self.isVertical = False
+        float self.minVrij = 0
         self.hoekpunt = Point()
 
     def setSize(float length, float width):
@@ -46,19 +64,22 @@ class House(object):
     def place(self, int x, int y):
 
 
-
-
 class Eengezins(House):
     def __init__(self):
         super().__init__()
         setSize(8.0,8.0)
+        self.minVrij = 2.0
 
 class Bungalow(House):
     def __init__(self):
         super().__init__()
         setSize(10.0,7.5)
+        self.minVrij = 3.0
 
 class Villa(House):
     def __init__(self):
         super().__init__()
         setSize(10.5,11.0)
+        self.minVrij = 6.0
+
+class Water(object):
