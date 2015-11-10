@@ -1,0 +1,88 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>grid - jsFiddle demo</title>
+  
+  
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.4.4.min.js'></script>
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css"/>
+  
+  <style type='text/css'>
+    body {
+    background: white;
+}
+
+canvas {
+    background: lightgreen;
+    margin: 1px;
+}
+
+  </style>
+  
+
+
+
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function(){
+//grid width and height
+var bw = 1600;
+var bh = 1500;
+//padding around grid
+var p = 10;
+//size of canvas
+var cw = bw + (p*2) + 1;
+var ch = bh + (p*2) + 1;
+
+var canvas = $('<canvas/>').attr({width: cw, height: ch}).appendTo('body');
+var context = canvas.get(0).getContext("2d");
+
+function drawBoard(){
+    for (var x = 0; x <= bw; x += 5) {
+        context.moveTo(0.5 + x + p, p);
+        context.lineTo(0.5 + x + p, bh + p);
+    }
+
+
+    for (var x = 0; x <= bh; x += 5) {
+        context.moveTo(p, 0.5 + x + p);
+        context.lineTo(bw + p, 0.5 + x + p);
+    }
+
+    context.strokeStyle = "black";
+    context.stroke();
+}
+drawBoard();
+
+context.fillStyle="blue";
+context.fillRect(20,20,21,21);
+
+context.fillStyle="red";
+context.fillRect(20,55,31,26);
+
+context.fillStyle="green";
+context.fillRect(20,100,41,36);
+
+
+
+});//]]> 
+
+</script>
+
+</head>
+<body>
+  <html>
+    <head></head>
+    <body>
+    </body>
+</html>
+
+  
+</body>
+
+</html>
+
