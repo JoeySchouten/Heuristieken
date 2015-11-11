@@ -22,7 +22,7 @@ class Map(object):
     def initializeMap(self):
         for x in range(self.length):
             for y in range(self.width):
-                self.data[x,y] = "leeg"
+                self.data[x,y] = True
 
     def lookup(self, point):
         return self.data[point.x, point.y]
@@ -96,14 +96,11 @@ class Villa(House):
         super(Villa, self).setSize(21,22)
         self.minVrij = 6
 
-class Water(object):
+class Water(House):
     def __init__(self):
+        super(Water, self).__init__()
         self.length = 0
         self.width = 0
-
-    def setSize(self, length, width):
-        self.length = length
-        self.width = width
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
@@ -129,13 +126,13 @@ class Combination(object):
         crawler = Point(0,0)
         # loop to place houses
         for i in range(len(self.houses)):
-            while self.houses[i].geplaatst == False:
+            if self.houses[i].geplaatst == False:
                 reqspacex=(2*self.houses[i].minVrij+self.houses[i].width)
                 reqspacey=(2*self.houses[i].minVrij+self.houses[i].length)
                 # check if crawler point is empty and if house can be placed (move to own boolean fucntion?)
                 # TODO: does not check whether the min. free space is honoured
                 # TODO: fill map data
-                if (self.map.data[crawler.x, crawler.y] == "leeg" and
+                if (self.map.data.get(crawler.x, crawler.y) and
                 crawler.x + reqspacex <= self.map.width and
                 crawler.y + reqspacey <= self.map.length):
                     self.houses[i].place(crawler.x, crawler.y)
