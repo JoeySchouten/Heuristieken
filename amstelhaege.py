@@ -24,7 +24,7 @@ class Map(object):
     def initializeMap(self):
         for x in range(self.length):
             for y in range(self.width):
-                self.data[x,y] = "leeg"
+                self.data[x,y] = True
 
     def lookup(self, point):
         return self.data[point.x, point.y]
@@ -85,23 +85,26 @@ class Eengezins(House):
         super(Eengezins, self).__init__()
         super(Eengezins, self).setSize(16,16)
         self.minVrij = 4
+        self.type = "Eengezins"
 
 class Bungalow(House):
     def __init__(self):
         super(Bungalow, self).__init__()
         super(Bungalow, self).setSize(20,15)
         self.minVrij = 6
+        self.type = "Bungalow"
 
 class Villa(House):
     def __init__(self):
         super(Villa, self).__init__()
         super(Villa, self).setSize(21,22)
         self.minVrij = 12
+        self.type = "Villa"
 
-class Water(object):
+class Water(House):
     def __init__(self):
-        self.length = 0
-        self.width = 0
+        super(Water, self).__init__()
+        self.type = "Water"
 
     def setSize(self, length, width):
         self.length = length
@@ -137,15 +140,16 @@ class Combination(object):
                 # check if crawler point is empty and if house can be placed (move to own boolean fucntion?)
                 # TODO: does not check whether the min. free space is honoured
                 # TODO: fill map data
-                if (self.map.data[crawler.x, crawler.y] == "leeg" and
+                if (self.map.data.get(crawler.x, crawler.y) and
                 crawler.x + reqspacex <= self.map.width and
                 crawler.y + reqspacey <= self.map.length):
                     self.houses[i].place(crawler.x, crawler.y)
+                    print(crawler.x, crawler.y)
                     # offsets dictionary key to include vrijstand
                     keyx = crawler.x-self.houses[i].minVrij
                     keyy = crawler.y-self.houses[i].minVrij
                     self.map.fill(keyx, keyy, self.houses[i].minVrij, self.houses[i].width, self.houses[i].length)
-                    crawler.setPoint(crawler.x+reqspacex, crawler.y+reqspacey)
+                    crawler.setPoint(crawler.x+reqspacex, crawler.y)
                 # else move crawler point and try again; if crawler is out of bounds, set x to 0, y++ (also make its own function?)
                 else:
                     crawler.setPoint(crawler.x+1,crawler.y)
@@ -153,7 +157,15 @@ class Combination(object):
                         crawler.setPoint(0,crawler.y+1)
 
     #function to print to csv file for visualisation
+    # output: corner x, corner y, length, width, type
     def printToCSV(self):
+        output = open("output.csv", "w")
+        try:
+            writer = csv.writer(output)
+            for i in range(len(self.houses)):
+                writer.writerow((self.houses[i].hoekpunt.x, self.houses[i].hoekpunt.y, self.houses[i].length, self.houses[i].width, self.houses[i].type))
+        finally:
+            output.close()
 
 
 # create object containing "dumb solution"
@@ -161,3 +173,4 @@ dumbsol = Combination(20)
 dumbsol.createHouseList(20)
 dumbsol.map.initializeMap()
 dumbsol.placeAll()
+dumbsol.printToCSV()
