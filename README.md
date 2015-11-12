@@ -1,10 +1,13 @@
 # Heuristieken
-<b>Contents:</b>
-To-Do<br>
-Klassen en Functies
+<b>Contents:</b><br>
+[To-Do](https://github.com/JoeySchouten/Heuristieken/tree/class-development#to-do)<br>
+[Klassen en Functies] (https://github.com/JoeySchouten/Heuristieken/tree/class-development#klassen-en-functies) <br>
 
 <h3>To-Do</h3>
-<ul> Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).<ul>
+<ul> Programma laten controleren of het een huis mag plaatsen op een bepaald punt (Combination.placeAll plaatst nu verkeerd)</ul>
+<ul> Toevoegen water op kaart </ul>
+<ul> Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).</ul>
+<ul> Alle Klassen en Functies toevoegen aan documentatie (zodat we het zelf ook nog blijven snappen)</ul>
 
 
 <h3>Klassen en Functies</h3>
