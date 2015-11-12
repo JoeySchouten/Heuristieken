@@ -9,25 +9,16 @@ class Point(object):
         self.x = x
         self.y = y
 
-class Checkpoint(Point):
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-
 class Map(object):
     def __init__(self):
         self.data = dict()
         self.length = 300
         self.width = 320
-        self.checkpoint = Checkpoint()
 
     def initializeMap(self):
         for x in range(self.length):
             for y in range(self.width):
                 self.data[x,y] = True
-
-    def lookup(self, point):
-        return self.data[point.x, point.y]
 
     def fill(self, keyx, keyy, vrij, width, height):
         # vul rijen met complete vrijstand
