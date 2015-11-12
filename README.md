@@ -1,10 +1,10 @@
 # Heuristieken
 <b>Contents:</b>
-To-Do
+To-Do<br>
 Klassen en Functies
 
-<h3>To-Do<h3>
-- Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).
+<h3>To-Do</h3>
+<ul> Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).<ul>
 
 
 <h3>Klassen en Functies</h3>
