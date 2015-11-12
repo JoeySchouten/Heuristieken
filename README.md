@@ -3,6 +3,10 @@
 To-Do
 Klassen en Functies
 
+<h3>To-Do<h3>
+- Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).
+
+
 <h3>Klassen en Functies</h3>
 <i><b>Point</b></i><br>
 Deze klasse is voor het defineren van een bepaald punt als een object, waarna deze ook snel aangepast kan worden.
@@ -32,6 +36,11 @@ Ook bevat deze klasse alle functies die de waarden e.d. in deze dict aanpassen.
 <i>initializeMap()</i> - Vult de dictionary in met keys voor elk punt op de kaart.<br>
 <i>fill(int keyx, int keyy, int vrij, int width, int height)</i> - Geeft waarden aan entries in de dictionary. <br>
   Uitleg input:<br>
+      int keyx - Begin x waarde voor de dictionary key ([keyx,y]).<br>
+      int keyy - Begin x waarde voor de dictionary key ([x,keyy]).<br>
+      int vrij - Hoeveelheid vereiste vrijstand van het huis dat ingevoerd wordt.<br>
+      int width - Breedte van het huis dat ingevoerd wordt.<br>
+      int height - Lengte van het huis dat ingevoerd wordt<br>
 
 <i>Child-klassen:</i><br>
 Er zijn geen klassen die Map als parent hebben.
