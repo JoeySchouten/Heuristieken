@@ -31,7 +31,6 @@ class Combination(object):
                 reqspacey=(2*self.houses[i].minVrij+self.houses[i].length)
                 # check if crawler point is empty and if house can be placed (move to own boolean fucntion?)
                 # TODO: does not check whether the min. free space is honoured
-                # TODO: fill map data
                 if (self.map.data[crawler.x,crawler.y] == "leeg" and
                 (crawler.x + reqspacex !> self.map.width and
                 (crawler.y + reqspacey !> self.map.length):
