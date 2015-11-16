@@ -20,9 +20,6 @@ class Map(object):
             for y in range(self.width):
                 self.data[x,y] = True
 
-    def lookup(self, point):
-        return self.data[point.x, point.y]
-
     def fill(self, keyx, keyy, vrij, width, height):
         # vul rijen met complete vrijstand
         for i in range(vrij):
@@ -100,6 +97,10 @@ class Water(House):
         super(Water, self).__init__()
         self.type = "Water"
 
+    def setSize(self, length, width):
+        self.length = length
+        self.width = width
+
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
     def createHouseList(self, amt):
@@ -124,7 +125,7 @@ class Combination(object):
         crawler = Point(0,0)
         # loop to place houses
         for i in range(len(self.houses)):
-            if self.houses[i].geplaatst == False:
+            while self.houses[i].geplaatst == False:
                 reqspacex=(2*self.houses[i].minVrij+self.houses[i].width)
                 reqspacey=(2*self.houses[i].minVrij+self.houses[i].length)
                 # check if crawler point is empty and if house can be placed (move to own boolean fucntion?)
