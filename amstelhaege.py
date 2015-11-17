@@ -150,7 +150,7 @@ class Combination(object):
     #function to print to csv file for visualisation
     # output: corner x, corner y, length, width, type
     def printToCSV(self):
-        output = open("output.csv", "w")
+        output = open("output.csv", "wb")
         try:
             writer = csv.writer(output)
             for i in range(len(self.houses)):
