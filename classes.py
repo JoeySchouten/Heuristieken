@@ -85,7 +85,11 @@ class Map(object):
                 self.data[keyx+i,keyy+n] = "moetvrij"
         #vul rijen met vrijstand|huis|vrijstand
         #set hoogte key opnieuw voor leesbare coordinates
-        keyy= keyy+vrij
+        keyy+=vrij
+        a = 0
+        b = 0
+        c = 0
+        d = 0
         for a in range(height):
             # loop vrijstand
             for b in range(vrij):
