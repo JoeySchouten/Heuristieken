@@ -66,6 +66,12 @@ class Point(object):
         self.x = x
         self.y = y
 
+    def move(self, mapWidth):
+        self.x += 1
+        if self.x > mapWidth:
+            self.x = 0
+            self.y += 1
+
 class Map(object):
     def __init__(self):
                 self.data = dict()
@@ -86,20 +92,20 @@ class Map(object):
         #vul rijen met vrijstand|huis|vrijstand
         #set hoogte key opnieuw voor leesbare coordinates
         keyy+=vrij
-        a = 0
-        b = 0
-        c = 0
-        d = 0
+        progress = 0
         for a in range(length):
             # loop vrijstand
             for b in range(vrij):
-                self.data[keyx+b,keyy+a] = "moetvrij"
+                self.data[keyx+progress,keyy+a] = "moetvrij"
+                progress+1
             # loop huis
             for c in range(width):
-                self.data[keyx+b+c,keyy+a] = "huis"
+                self.data[keyx+progress,keyy+a] = "huis"
+                progress+1
             # loop vrijstand
             for d in range(vrij):
-                self.data[keyx+b+c+d,keyy+a] = "moetvrij"
+                self.data[keyx+progress,keyy+a] = "moetvrij"
+                progress+1
         #vul rijen met complete vrijstand weer
         keyy= keyy+length
         for j in range(vrij):

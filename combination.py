@@ -4,23 +4,24 @@ import random
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
-    def createHouseList(self, amt):
+    def createHouseList(self, amt, bodies):
         for x in range(int(0.6*amt)):
             self.houses.append(Eengezins())
         for x in range(int(0.25*amt)):
             self.houses.append(Bungalow())
         for x in range(int(0.15*amt)):
             self.houses.append(Villa())
-        for x in range(4):
+        for x in range(bodies):
             self.houses.append(Water())
-        return len(self.houses) == amt + 4
+        return len(self.houses) == amt + bodies
 
     # berekening voor de min/max lengtes van het water (gaan nu even uit van 1 lichaam)
-    def randWaterCalc(bodies):
+    def randWaterCalc(self, bodies):
         watersizes = []
         minwater = 4800
+        surface = []
         for x in range(bodies):
-            surface[x] = int((1/bodies)*minwater)
+            surface.append(int((1/bodies)*minwater))
         for n in range(bodies):
             inrange = False
             rangemin = 0
@@ -35,14 +36,15 @@ class Combination(object):
                     if ratio < 1 or ratio > 4:
                         rangemax = i-1
                         break
-            watersizes[n][0] = random.randint(rangemin,rangemax)
-            watersizes[n][1] = minwater/watersizes[n][0]
+            watersizes.append([])
+            watersizes[n].append(random.randint(rangemin,rangemax))
+            watersizes[n].append(minwater/watersizes[n][0])
         return watersizes
 
     def setWaterSizes(self, sizearray):
         #gaat ervanuit dat de laatste 4 entries in de houselist water is
         n = 0
-        for i in range(len(self.houses[-4 : (len(sizearray)) ])):
+        for i in range(len(self.houses[-self.bodies : (len(sizearray)) ])):
             self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
             n = n + 1
 
@@ -50,39 +52,45 @@ class Combination(object):
     def __init__(self, amt, bodies):
         self.map = Map()
         self.houses = []
-        self.createHouseList(amt)
+        self.bodies = bodies
+        self.createHouseList(amt, bodies)
         self.setWaterSizes(self.randWaterCalc(bodies))
-
 
     #function to place houses on map
     def placeAll(self):
-        # coordinates in x,y format
         crawler = Point(0,0)
-        # loop to place houses
-        for i in range(len(self.houses)):
-            reqspacex=2*self.houses[i].minVrij+self.houses[i].width
-            reqspacey=2*self.houses[i].minVrij+self.houses[i].length
-            while self.houses[i].geplaatst == False:
-                print crawler.x, crawler.y
-                # check if crawler point exists
+        for x in range(len(self.houses)):
+            reqspacex = self.houses[x].minVrij * 2 + self.houses[x].width
+            reqspacey = self.houses[x].minVrij * 2 + self.houses[x].length
+            while self.houses[x].geplaatst == False:
+                isLegal = True
+                # kijkt of point bestaat
+                while self.map.data.get(crawler.x, crawler.y) == None:
+                    crawler.move(self.map.width)
+                # kijkt of point leeg is
                 if self.map.data.get(crawler.x, crawler.y) != None:
-                    # if crawler point is not empty, go to next point
-                    if (self.map.data.get(crawler.x, crawler.y) == "huis" or
-                        self.map.data.get(crawler.x, crawler.y) == "moetvrij"):
-                        crawler.setPoint(crawler.x+1, crawler.y)
-                        if crawler.x > self.map.width:
-                            crawler.setPoint(0, crawler.y+1)
-                    # else if there is enough space, place house
-                    elif crawler.x + reqspacex <= self.map.width and crawler.y + reqspacey <= self.map.length:
-                        self.houses[i].place(crawler.x, crawler.y)
-                        # offsets dictionary key to include vrijstand
-                        keyx = crawler.x-self.houses[i].minVrij
-                        keyy = crawler.y-self.houses[i].minVrij
-                        self.map.fill(keyx, keyy, self.houses[i].minVrij, self.houses[i].width, self.houses[i].length)
-                        crawler.setPoint(crawler.x+reqspacex, crawler.y)
-                    # else go to next row
+                    # kijkt of huis nog op de kaart past
+                    if crawler.x + reqspacex > self.map.width:
+                        crawler.x = 0
+                        crawler.y += 1
+                    elif crawler.y + reqspacey > self.map.length:
+                        break
                     else:
-                        crawler.setPoint(0, crawler.y+1)
+                        for i in range(reqspacex):
+                            for n in range(reqspacey):
+                                if self.map.data.get(crawler.x + i, crawler.y + n) != True:
+                                    isLegal = False
+                        if isLegal == True:
+                            #plaats huis
+                            self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
+                            print i, crawler.x, crawler.y
+                            self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
+                            crawler.setPoint(crawler.x + reqspacex, crawler.y)
+                        else:
+                            crawler.move(self.map.width)
+                else:
+                    crawler.move(self.map.width)
+
 
     #function to print to csv file for visualisation
     # output: corner x, corner y, length, width, type

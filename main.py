@@ -6,3 +6,4 @@ import random
 dumbsol = Combination(20, 1)
 dumbsol.placeAll()
 dumbsol.printToCSV()
+#print dumbsol.map.data
