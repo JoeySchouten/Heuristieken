@@ -78,7 +78,7 @@ class Map(object):
             for y in range(self.width):
                 self.data[x,y] = True
 
-    def fill(self, keyx, keyy, vrij, width, height):
+    def fill(self, keyx, keyy, vrij, width, length):
         # vul rijen met complete vrijstand
         for i in range(vrij):
             for n in range(width+2*vrij):
@@ -90,7 +90,7 @@ class Map(object):
         b = 0
         c = 0
         d = 0
-        for a in range(height):
+        for a in range(length):
             # loop vrijstand
             for b in range(vrij):
                 self.data[keyx+b,keyy+a] = "moetvrij"
@@ -101,7 +101,7 @@ class Map(object):
             for d in range(vrij):
                 self.data[keyx+b+c+d,keyy+a] = "moetvrij"
         #vul rijen met complete vrijstand weer
-        keyy= keyy+height
+        keyy= keyy+length
         for j in range(vrij):
             for n in range(width+2*vrij):
                 self.data[keyx+i,keyy+n] = "moetvrij"

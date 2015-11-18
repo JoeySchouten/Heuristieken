@@ -5,9 +5,11 @@
 
 <h3>To-Do</h3>
 <ul> Programma laten controleren of het een huis mag plaatsen op een bepaald punt (Combination.placeAll plaatst nu verkeerd)</ul>
-<ul> Toevoegen water op kaart </ul>
-<ul> Aanpassen Map.fill en de Combination.placeAll functies om geen height maar length te gebruiken (height is z-as).</ul>
 <ul> Alle Klassen en Functies toevoegen aan documentatie (zodat we het zelf ook nog blijven snappen)</ul>
+<ul> Functie die de min. vrijstand rondom een huis bepaalt; in een spiraal ipv. linear.</ul>
+<ul> Waterberekenfunctie de oppervlakte willekeurig laten opdelen over de lichamen.</ul>
+<ul> Even goed kijken naar de Map.fill functie; volgens mij doet deze het niet; zitten optelsommen in die gebruikmaken van de waarden van de loops, daar zit wss het probleem.</ul>
+<ul> Wanneer de "domme oplossing" af is, mergen met master. </ul>
 
 
 <h3>Klassen en Functies</h3>
