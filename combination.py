@@ -18,6 +18,7 @@ class Combination(object):
     def __init__(self, amt):
         self.map = Map()
         self.houses = []
+        self.createHouseList(amt)
 
     #function to place houses on map
     def placeAll(self):

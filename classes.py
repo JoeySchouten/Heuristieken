@@ -1,3 +1,5 @@
+from random import randint
+
 class House(object):
     """overkoepelende klasse voor alle soorten huizen; wordt zelf niet geintieerd, maar levert alle gezamelijke onderdelen
     door middel van inheritance"""
@@ -54,6 +56,7 @@ class Water(House):
         self.length = length
         self.width = width
 
+
 class Point(object):
     def __init__(self, x, y):
         self.x = x
@@ -68,6 +71,7 @@ class Map(object):
                 self.data = dict()
                 self.length = 300
                 self.width = 320
+                self.initializeMap()
 
     def initializeMap(self):
         for x in range(self.length):
