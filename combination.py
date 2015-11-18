@@ -1,5 +1,6 @@
 import csv
 from classes import *
+import random
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
@@ -14,11 +15,44 @@ class Combination(object):
             self.houses.append(Water())
         return len(self.houses) == amt + 4
 
+    # berekening voor de min/max lengtes van het water (gaan nu even uit van 1 lichaam)
+    def randWaterCalc(bodies):
+        watersizes = []
+        minwater = 4800
+        for x in range(bodies):
+            surface[x] = int((1/bodies)*minwater)
+        for n in range(bodies):
+            inrange = False
+            rangemin = 0
+            rangemax = 0
+            for i in range(1,200):
+                ratio = (surface[n]/i)/i
+                if inrange == False:
+                    if ratio >= 1 and ratio <=4:
+                        rangemin = i
+                        inrange = True
+                else:
+                    if ratio < 1 or ratio > 4:
+                        rangemax = i-1
+                        break
+            watersizes[n][0] = random.randint(rangemin,rangemax)
+            watersizes[n][1] = minwater/watersizes[n][0]
+        return watersizes
+
+    def setSizes(self, sizearray):
+        #gaat ervanuit dat de laatste 4 entries in de houselist water is
+        n = 0
+        for i in range(len(self.houses[-4 : (len(sizearray)) ])):
+            self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
+            n = n + 1
+
     # initializes class and initializes map and house list as well
-    def __init__(self, amt):
+    def __init__(self, amt, bodies):
         self.map = Map()
         self.houses = []
         self.createHouseList(amt)
+        self.setSizes(self.randWaterCalc(bodies))
+
 
     #function to place houses on map
     def placeAll(self):
