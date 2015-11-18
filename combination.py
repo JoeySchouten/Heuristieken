@@ -39,7 +39,7 @@ class Combination(object):
             watersizes[n][1] = minwater/watersizes[n][0]
         return watersizes
 
-    def setSizes(self, sizearray):
+    def setWaterSizes(self, sizearray):
         #gaat ervanuit dat de laatste 4 entries in de houselist water is
         n = 0
         for i in range(len(self.houses[-4 : (len(sizearray)) ])):
@@ -51,7 +51,7 @@ class Combination(object):
         self.map = Map()
         self.houses = []
         self.createHouseList(amt)
-        self.setSizes(self.randWaterCalc(bodies))
+        self.setWaterSizes(self.randWaterCalc(bodies))
 
 
     #function to place houses on map
