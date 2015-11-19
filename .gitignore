@@ -3,3 +3,5 @@ combination.pyc
 *.pyc
 classes.pyc
 output.csv
+*.pyc
+output.csv
