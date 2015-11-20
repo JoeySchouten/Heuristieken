@@ -59,37 +59,57 @@ class Combination(object):
     #function to place houses on map
     def placeAll(self):
         crawler = Point(0,0)
+
+        #range 1-12 doet het prima
         for x in range(len(self.houses)):
+            #berekenen min. benodigde ruimte in totaal
             reqspacex = self.houses[x].minVrij * 2 + self.houses[x].width
             reqspacey = self.houses[x].minVrij * 2 + self.houses[x].length
+
             while self.houses[x].geplaatst == False:
                 isLegal = True
-                # kijkt of point bestaat
-                while self.map.data.get(crawler.x, crawler.y) == None:
+
+                # kijkt of point bestaat WERKT
+                print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
+                while self.map.data.get((crawler.x, crawler.y)) == None:
                     crawler.move(self.map.width)
-                # kijkt of point leeg is
-                if self.map.data.get(crawler.x, crawler.y) != None:
-                    # kijkt of huis nog op de kaart past
+                    print "Punt bestaat niet, crawler verplaatst naar:", crawler.x, crawler.y
+                print "Punt gevonden, controleren op ruimte:"
+
+                # kijkt of point leeg is WERKT
+                if self.map.data.get((crawler.x, crawler.y)) != None:
+                    # kijkt of huis nog op de kaart past WERKT
                     if crawler.x + reqspacex > self.map.width:
                         crawler.x = 0
                         crawler.y += 1
+                        print "Niet genoeg ruimte op x-as; crawler verplaatst naar ", crawler.x, crawler.y
                     elif crawler.y + reqspacey > self.map.length:
+                        print "Niet genoeg ruimte op y-as; kaart vol. break."
                         break
                     else:
-                        for i in range(reqspacex):
-                            for n in range(reqspacey):
-                                if self.map.data.get(crawler.x + i, crawler.y + n) != True:
+                        # controleren of gebied leeg is voor plaatsing huis DOET HET NIET
+                        print "Genoeg ruimte op kaart vanaf dit punt. Controleren vrijstand:"
+                        for z in range(reqspacex):
+                            for y in range(reqspacey):
+                                checkx = crawler.x + z
+                                checky = crawler.y + y
+                                if self.map.data.get((checkx, checky)) != "leeg":
+                                    print "Punt ", checkx, checky, "is niet leeg."
                                     isLegal = False
                         if isLegal == True:
                             #plaats huis
+                            print "Gehele gebied is leeg. Plaatsen huis."
                             self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
-                            print i, crawler.x, crawler.y
+                            print "Invullen kaart"
                             self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
                             crawler.setPoint(crawler.x + reqspacex, crawler.y)
+                            print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
                         else:
                             crawler.move(self.map.width)
+                            print "Plaatsing niet legaal, crawler verplaatst naar:", crawler.x, crawler.y
                 else:
                     crawler.move(self.map.width)
+                    print "Huidig punt is niet leeg, crawler verplaatst naar:", crawler.x, crawler.y
 
 
     #function to print to csv file for visualisation

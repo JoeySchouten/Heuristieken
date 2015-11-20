@@ -82,7 +82,7 @@ class Map(object):
     def initializeMap(self):
         for x in range(self.length):
             for y in range(self.width):
-                self.data[x,y] = True
+                self.data[x,y] = "leeg"
 
     def fill(self, keyx, keyy, vrij, width, length):
         # vul rijen met complete vrijstand
