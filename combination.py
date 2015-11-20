@@ -59,18 +59,24 @@ class Combination(object):
     #function to place houses on map
     def placeAll(self):
         crawler = Point(0,0)
-        for x in range(2):
+
+        #range 1-12 doet het prima
+        for x in range(len(self.houses)):
+            #berekenen min. benodigde ruimte in totaal
             reqspacex = self.houses[x].minVrij * 2 + self.houses[x].width
             reqspacey = self.houses[x].minVrij * 2 + self.houses[x].length
+
             while self.houses[x].geplaatst == False:
                 isLegal = True
+
                 # kijkt of point bestaat WERKT
                 print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
                 while self.map.data.get((crawler.x, crawler.y)) == None:
                     crawler.move(self.map.width)
                     print "Punt bestaat niet, crawler verplaatst naar:", crawler.x, crawler.y
+                print "Punt gevonden, controleren op ruimte:"
+
                 # kijkt of point leeg is WERKT
-                print "Punt gevonden, controleren op ruimte"
                 if self.map.data.get((crawler.x, crawler.y)) != None:
                     # kijkt of huis nog op de kaart past WERKT
                     if crawler.x + reqspacex > self.map.width:
