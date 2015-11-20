@@ -11,6 +11,8 @@
 	doe dit zolang er geen huizen geraakt worden
 	sla de vrijstand op in een variabele, trek daar de min vrijstaande waarde bij af
 
+	Maak er 1 functie van die je over een object trekt; een for loop die over de array met huizen gaat is zo gebouwd en is wss beter buiten de functie te plaatsen.
+
 def totaleVrijstand:
 	#coordinates in x,y format
     crawler = Eerste huis op eerste locatie

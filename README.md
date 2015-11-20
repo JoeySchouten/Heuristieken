@@ -4,12 +4,12 @@
 [Klassen en Functies] (https://github.com/JoeySchouten/Heuristieken/tree/class-development#klassen-en-functies) <br>
 
 <h3>To-Do</h3>
-<ul> Programma laten controleren of het een huis mag plaatsen op een bepaald punt (Combination.placeAll plaatst nu verkeerd)</ul>
+<ul> placeAll efficienter maken, op de x-as plaatst ie sowieso goed; maar na de 1e rij huizen loopt ie alle punten die bezet zijn door die huizen door. Moet beter.</ul>
 <ul> Alle Klassen en Functies toevoegen aan documentatie (zodat we het zelf ook nog blijven snappen)</ul>
 <ul> Functie die de min. vrijstand rondom een huis bepaalt; in een spiraal ipv. linear.</ul>
 <ul> Waterberekenfunctie de oppervlakte willekeurig laten opdelen over de lichamen.</ul>
-<ul> Even goed kijken naar de Map.fill functie; volgens mij doet deze het niet; zitten optelsommen in die gebruikmaken van de waarden van de loops, daar zit wss het probleem.</ul>
 <ul> Wanneer de "domme oplossing" af is, mergen met master. </ul>
+<ul> Kijken of een 2-dimensionale array sneller is wanner placeAll functie compleet werkt.</ul>
 
 
 <h3>Klassen en Functies</h3>

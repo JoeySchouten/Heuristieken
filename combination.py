@@ -59,20 +59,20 @@ class Combination(object):
     #function to place houses on map
     def placeAll(self):
         crawler = Point(0,0)
-        for x in range(1):
+        for x in range(2):
             reqspacex = self.houses[x].minVrij * 2 + self.houses[x].width
             reqspacey = self.houses[x].minVrij * 2 + self.houses[x].length
             while self.houses[x].geplaatst == False:
                 isLegal = True
-                # kijkt of point bestaat
+                # kijkt of point bestaat WERKT
                 print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
-                while self.map.data.get(crawler.x, crawler.y) == None:
+                while self.map.data.get((crawler.x, crawler.y)) == None:
                     crawler.move(self.map.width)
                     print "Punt bestaat niet, crawler verplaatst naar:", crawler.x, crawler.y
-                # kijkt of point leeg is
+                # kijkt of point leeg is WERKT
                 print "Punt gevonden, controleren op ruimte"
-                if self.map.data.get(crawler.x, crawler.y) != None:
-                    # kijkt of huis nog op de kaart past
+                if self.map.data.get((crawler.x, crawler.y)) != None:
+                    # kijkt of huis nog op de kaart past WERKT
                     if crawler.x + reqspacex > self.map.width:
                         crawler.x = 0
                         crawler.y += 1
@@ -81,11 +81,14 @@ class Combination(object):
                         print "Niet genoeg ruimte op y-as; kaart vol. break."
                         break
                     else:
+                        # controleren of gebied leeg is voor plaatsing huis DOET HET NIET
                         print "Genoeg ruimte op kaart vanaf dit punt. Controleren vrijstand:"
-                        for i in range(reqspacex):
-                            for n in range(reqspacey):
-                                if self.map.data.get(crawler.x + i, crawler.y + n) != True:
-                                    print "Punt " crawler.x+i, crawler.y+n, "is niet leeg."
+                        for z in range(reqspacex):
+                            for y in range(reqspacey):
+                                checkx = crawler.x + z
+                                checky = crawler.y + y
+                                if self.map.data.get((checkx, checky)) != "leeg":
+                                    print "Punt ", checkx, checky, "is niet leeg."
                                     isLegal = False
                         if isLegal == True:
                             #plaats huis
