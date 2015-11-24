@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Amstelhaege</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class = "wijk">
@@ -16,39 +17,12 @@
 		124,4,16,16,Eengezins
 		148,4,16,16,Eengezins
 		172,4,16,16,Eengezins
-		196,4,16,16,Eengezins
-		220,4,16,16,Eengezins
-		244,4,16,16,Eengezins
-		268,4,16,16,Eengezins
-		272,28,16,16,Eengezins
-		4,52,16,16,Eengezins
-		28,52,16,16,Eengezins
-		52,52,16,16,Eengezins
-		76,52,16,16,Eengezins
-		100,52,16,16,Eengezins
-		124,52,16,16,Eengezins
-		148,52,16,16,Eengezins
-		172,52,16,16,Eengezins
-		196,52,16,16,Eengezins
-		220,52,16,16,Eengezins
-		244,52,16,16,Eengezins
-		278,54,20,15,Bungalow
-		250,86,20,15,Bungalow
-		6,118,20,15,Bungalow
-		33,118,20,15,Bungalow
-		60,118,20,15,Bungalow
-		87,118,20,15,Bungalow
-		114,118,20,15,Bungalow
-		141,118,20,15,Bungalow
-		168,118,20,15,Bungalow
-		195,118,20,15,Bungalow
-		262,124,21,22,Villa
-		207,169,21,22,Villa
-		12,214,21,22,Villa
-		58,214,21,22,Villa
-		104,214,21,22,Villa
-		150,214,21,22,Villa
-		184,202,0,0,Water
+		198,6,20,15,Bungalow
+		225,6,20,15,Bungalow
+		252,6,20,15,Bungalow
+		264,44,21,22,Villa
+		12,89,21,22,Villa
+		46,77,0,0,Water
 	</textarea>
 	<script>
 	var canvas = document.getElementById('veld');
@@ -83,13 +57,13 @@
 
 		for(x = 0; x < xcor.length; x++){
 			if (huisval[x] === "Eengezins") {
-				context.fillStyle="gray";				
+				context.fillStyle = "gray";				
 			} else if (huisval[x] === "Bungalow") {
-				context.fillStyle="brown";				
+				context.fillStyle = "brown";				
 			} else if (huisval[x] === "Villa") {
-				context.fillStyle="#262626";				
+				context.fillStyle = "#262626";				
 			} else if (huisval[x] === "Water") {
-				context.fillStyle="lightblue";				
+				context.fillStyle = "#00DDDD";				
 			}
 			context.fillRect(xcor[x],ycor[x],huiswid[x],huislen[x]);
 	   	}
