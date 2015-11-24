@@ -112,6 +112,56 @@ class Combination(object):
                     print "Huidig punt is niet leeg, crawler verplaatst naar:", crawler.x, crawler.y
 
 
+    # functie voor het berekenen van de vrijstand van een huis
+    def berekenVrijstand(self, house):
+    	crawler = house.hoekpunt.x, (house.hoekpunt.y - 1)
+    	spiraal = 0
+    	vrijstand = 0
+
+    	# variabele die aangeeft of er nog vrije ruimte is
+    	heeftRuimte = True
+    	while heeftRuimte == True:
+    		for j in range(house.width + spiraal):
+    			if self.map.data.get((crawler.x, crawler.y)) != None
+    				crawler.x += 1
+    			else:
+    				heeftRuimte = False
+    				break
+    		for k in range(house.length + spiraal):
+    			if heeftRuimte == False:
+    				break
+    			elif self.map.data.get((crawler.x, crawler.y)) != None:
+    				crawler.y += 1
+    			else:
+    				heeftRuimte = False
+    				break
+    		spiraal += 1
+    		for l in range(house.width + spiraal):
+    			if heeftRuimte == False:
+    				break
+    			elif self.map.data.get((crawler.x, crawler.y)) != None:
+    				crawler.x -= 1
+    			else:
+    				heeftRuimte = False
+    				break
+    		for m in range(house.length + spiraal):
+    			if heeftRuimte == False:
+    				break
+    			elif self.map.data.get((crawler.x, crawler.y)) != None
+    				crawler.y -= 1
+    			else:
+    				heeftRuimte = False
+    				break
+    		spiraal += 1
+    		vrijstand += 1
+    	return vrijstand - house.minVrij
+
+    # funtie voor het berekenen van de vrijstand van alle huizen
+    def totaleVrijstand(self):
+    	for i in range(len(self.houses)):
+    		self.houses[i].extraVrij = berekenVrijstand(self.houses[i])
+
+
     #function to print to csv file for visualisation
     # output: corner x, corner y, length, width, type
     def printToCSV(self):
