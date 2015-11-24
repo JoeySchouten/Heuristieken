@@ -98,15 +98,15 @@ class Map(object):
             # loop vrijstand
             for b in range(vrij):
                 self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress+1
+                progress += 1
             # loop huis
             for c in range(width):
                 self.data[keyx+progress,keyy+a] = "huis"
-                progress+1
+                progress += 1
             # loop vrijstand
             for d in range(vrij):
                 self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress+1
+                progress += 1
         #vul rijen met complete vrijstand weer
         keyy= keyy+length
         for j in range(vrij):

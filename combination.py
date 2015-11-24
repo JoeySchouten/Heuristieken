@@ -114,52 +114,66 @@ class Combination(object):
 
     # functie voor het berekenen van de vrijstand van een huis
     def berekenVrijstand(self, house):
-    	crawler = house.hoekpunt.x, (house.hoekpunt.y - 1)
-    	spiraal = 0
-    	vrijstand = 0
+        crawler = Point(house.hoekpunt.x, (house.hoekpunt.y - 1))
+        spiraal = 0
+        vrijstand = 0
+        # variabele die aangeeft of er nog vrije ruimte is
+        heeftRuimte = True
+        while heeftRuimte == True:
+            for j in range(house.width + spiraal):
+                if self.map.data.get((crawler.x, crawler.y)) != "huis":
+                    crawler.x += 1
+                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
 
-    	# variabele die aangeeft of er nog vrije ruimte is
-    	heeftRuimte = True
-    	while heeftRuimte == True:
-    		for j in range(house.width + spiraal):
-    			if self.map.data.get((crawler.x, crawler.y)) != None
-    				crawler.x += 1
-    			else:
-    				heeftRuimte = False
-    				break
-    		for k in range(house.length + spiraal):
-    			if heeftRuimte == False:
-    				break
-    			elif self.map.data.get((crawler.x, crawler.y)) != None:
-    				crawler.y += 1
-    			else:
-    				heeftRuimte = False
-    				break
-    		spiraal += 1
-    		for l in range(house.width + spiraal):
-    			if heeftRuimte == False:
-    				break
-    			elif self.map.data.get((crawler.x, crawler.y)) != None:
-    				crawler.x -= 1
-    			else:
-    				heeftRuimte = False
-    				break
-    		for m in range(house.length + spiraal):
-    			if heeftRuimte == False:
-    				break
-    			elif self.map.data.get((crawler.x, crawler.y)) != None
-    				crawler.y -= 1
-    			else:
-    				heeftRuimte = False
-    				break
-    		spiraal += 1
-    		vrijstand += 1
-    	return vrijstand - house.minVrij
+                else:
+                    print "plaats is niet leeg, break"
+                    heeftRuimte = False
+                    break
+            for k in range(house.length + spiraal):
+                if heeftRuimte == False:
+                    print "heeftRuimte is False, break"
+                    break
+                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
+                    crawler.y += 1
+                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
+                else:
+                    print "plaats is niet leeg, break"
+                    heeftRuimte = False
+                    break
+            spiraal += 1
+            for l in range(house.width + spiraal):
+                if heeftRuimte == False:
+                    print "heeftRuimte is false, break"
+                    break
+                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
+                    crawler.x -= 1
+                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
+
+                else:
+                    print "plaats is niet leeg, break"
+                    heeftRuimte = False
+                    break
+            for m in range(house.length + spiraal):
+                if heeftRuimte == False:
+                    print "heeftRuimte is False, break"
+                    break
+                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
+                    crawler.y -= 1
+                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
+                else:
+                    print "plaats is niet leeg, break"
+                    heeftRuimte = False
+                    break
+            spiraal += 1
+            vrijstand += 1
+            print "volgende loop"
+        return vrijstand
 
     # funtie voor het berekenen van de vrijstand van alle huizen
     def totaleVrijstand(self):
-    	for i in range(len(self.houses)):
-    		self.houses[i].extraVrij = berekenVrijstand(self.houses[i])
+        for i in range(len(self.houses)):
+            self.houses[i].extraVrij = self.berekenVrijstand(self.houses[i])
+            print self.houses[i].extraVrij
 
 
     #function to print to csv file for visualisation
