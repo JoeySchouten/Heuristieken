@@ -44,7 +44,7 @@ class Combination(object):
     def setWaterSizes(self, sizearray):
         #gaat ervanuit dat de laatste 4 entries in de houselist water is
         n = 0
-        for i in range(len(self.houses[-self.bodies : (len(sizearray)) ])):
+        for i in range(len(self.houses[(-(self.bodies)) : (len(sizearray)) ])):
             self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
             n = n + 1
 
@@ -54,7 +54,8 @@ class Combination(object):
         self.houses = []
         self.bodies = bodies
         self.createHouseList(amt, bodies)
-        self.setWaterSizes(self.randWaterCalc(bodies))
+        self.watersizes = self.randWaterCalc(bodies)
+        self.setWaterSizes(self.watersizes)
 
     #function to place houses on map
     def placeAll(self):
@@ -103,7 +104,7 @@ class Combination(object):
                             self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
                             print "Invullen kaart"
                             self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
-                            miny = crawler.y+reqspacey
+                            miny = crawler.y + reqspacey
                             crawler.setPoint(crawler.x + reqspacex, crawler.y)
                             print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
                         else:
