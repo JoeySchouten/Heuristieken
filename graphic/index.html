@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Amstelhaege</title>
+</head>
+<body>
+	<div class = "wijk">
+		<canvas id="veld"  width="960" height="900"></canvas>
+	</div>
+	<textarea id="huisplaats" style="display:none;">
+	4,4,16,16,Eengezins
+	28,4,16,16,Eengezins
+	52,4,16,16,Eengezins
+	76,4,16,16,Eengezins
+	100,4,16,16,Eengezins
+	124,4,16,16,Eengezins
+	148,4,16,16,Eengezins
+	172,4,16,16,Eengezins
+	196,4,16,16,Eengezins
+	220,4,16,16,Eengezins
+	244,4,16,16,Eengezins
+	268,4,16,16,Eengezins
+	294,4,20,15,Bungalow
+	6,50,20,15,Bungalow
+	33,50,20,15,Bungalow
+	60,50,20,15,Bungalow
+	87,50,20,15,Bungalow
+	120,56,21,22,Villa
+	166,56,21,22,Villa
+	212,56,21,22,Villa
+	246,44,0,0,Water
+	</textarea>
+	<script>
+	var canvas = document.getElementById('veld');
+	var context = canvas.getContext("2d");
+	var str = document.getElementById("huisplaats").innerText;
+
+	canvas.style.background = 'lightgreen';
+	
+	// splitst op de nieuwe lijn
+	var wijkdata = str.split("\n");
+	var xcor = [];
+	var ycor = [];
+	var huislen = [];
+	var huiswid = [];
+	var huisval = []
+	
+		// wijkdata tekenen
+		for (var i in wijkdata) {
+			var data = wijkdata[i].split(",");
+			xcor.push((data[0])*3);
+			ycor.push((data[1])*3);
+			huislen.push((data[2])*3);
+			huiswid.push((data[3])*3);
+			huisval.push(data[4]);
+		}
+
+		console.log(xcor)
+	   	console.log(ycor);
+	   	console.log(huislen);
+	   	console.log(huiswid);
+	   	console.log(huisval);
+
+		for(x = 0; x < xcor.length; x++){
+			context.fillRect(xcor[x],ycor[x],huiswid[x],huislen[x]);
+	   	}
+	   	</script>
+	   </body>
+	   </html>
