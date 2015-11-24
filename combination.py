@@ -44,7 +44,7 @@ class Combination(object):
     def setWaterSizes(self, sizearray):
         #gaat ervanuit dat de laatste 4 entries in de houselist water is
         n = 0
-        for i in range(len(self.houses[-self.bodies : (len(sizearray)) ])):
+        for i in range(len(self.houses[(-(self.bodies)) : (len(sizearray)) ])):
             self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
             n = n + 1
 
@@ -54,11 +54,13 @@ class Combination(object):
         self.houses = []
         self.bodies = bodies
         self.createHouseList(amt, bodies)
-        self.setWaterSizes(self.randWaterCalc(bodies))
+        self.watersizes = self.randWaterCalc(bodies)
+        self.setWaterSizes(self.watersizes)
 
     #function to place houses on map
     def placeAll(self):
         crawler = Point(0,0)
+        miny = 0
 
         #range 1-12 doet het prima
         for x in range(len(self.houses)):
@@ -69,25 +71,25 @@ class Combination(object):
             while self.houses[x].geplaatst == False:
                 isLegal = True
 
-                # kijkt of point bestaat WERKT
+                # kijkt of point bestaat
                 print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
                 while self.map.data.get((crawler.x, crawler.y)) == None:
                     crawler.move(self.map.width)
                     print "Punt bestaat niet, crawler verplaatst naar:", crawler.x, crawler.y
                 print "Punt gevonden, controleren op ruimte:"
 
-                # kijkt of point leeg is WERKT
+                # kijkt of point leeg is
                 if self.map.data.get((crawler.x, crawler.y)) != None:
-                    # kijkt of huis nog op de kaart past WERKT
+                    # kijkt of huis nog op de kaart past
                     if crawler.x + reqspacex > self.map.width:
                         crawler.x = 0
-                        crawler.y += 1
+                        crawler.y = miny
                         print "Niet genoeg ruimte op x-as; crawler verplaatst naar ", crawler.x, crawler.y
                     elif crawler.y + reqspacey > self.map.length:
                         print "Niet genoeg ruimte op y-as; kaart vol. break."
                         break
                     else:
-                        # controleren of gebied leeg is voor plaatsing huis DOET HET NIET
+                        # controleren of gebied leeg is voor plaatsing huis
                         print "Genoeg ruimte op kaart vanaf dit punt. Controleren vrijstand:"
                         for z in range(reqspacex):
                             for y in range(reqspacey):
@@ -102,6 +104,7 @@ class Combination(object):
                             self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
                             print "Invullen kaart"
                             self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
+                            miny = crawler.y + reqspacey
                             crawler.setPoint(crawler.x + reqspacex, crawler.y)
                             print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
                         else:
