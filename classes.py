@@ -10,6 +10,7 @@ class House(object):
         self.minVrij = 0
         self.hoekpunt = Point(0,0)
         self.geplaatst = False
+        self.extraVrij = 0
 
     def setSize(self, length, width):
         self.length = length
