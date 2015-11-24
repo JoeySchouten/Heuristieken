@@ -14,8 +14,38 @@
 	Maak er 1 functie van die je over een object trekt; een for loop die over de array met huizen gaat is zo gebouwd en is wss beter buiten de functie te plaatsen.
 
 def totaleVrijstand:
-	#coordinates in x,y format
-    crawler = Eerste huis op eerste locatie
-    # loop to place houses
-	for i in range(len(self.houses)):
-    	#blijven loopen door huizen
+	crawler = self.houses[i].hoekpunt.x, (self.houses[i].hoekpunt.y - 1)
+	spiraal = 1
+	vrijstand = 0
+
+	# variabele die aangeeft of er nog vrije ruimte is
+	heeftRuimte = True
+	while heeftRuimte == True:
+		for j in range(self.houses[i].width + spiraal):
+			if self.map.data.get((crawler.x, crawler.y)) != None
+				crawler.x += 1
+			else:
+				heeftRuimte = False
+				break
+		for k in range(self.houses[i].length + spiraal):
+			if self.map.data.get((crawler.x, crawler.y)) != None:
+				crawler.y += 1
+			else:
+				heeftRuimte = False
+				break
+		spiraal += 1
+		for l in range(self.houses[i].width + spiraal):
+			if self.map.data.get((crawler.x, crawler.y)) != None:
+				crawler.x -= 1
+			else:
+				heeftRuimte = False
+				break
+		for m in range(self.houses[i].length + spiraal):
+			if self.map.data.get((crawler.x, crawler.y)) != None
+				crawler.y -= 1
+			else:
+				heeftRuimte = False
+				break
+		spiraal += 1
+		vrijstand += 1
+	return vrijstand - self.houses[i].minVrij
