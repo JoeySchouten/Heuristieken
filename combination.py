@@ -129,47 +129,37 @@ class Combination(object):
             for j in range(house.width + spiraal):
                 if self.map.data.get((crawler.x, crawler.y)) != "huis":
                     crawler.x += 1
-                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
-
                 else:
                     print "plaats is niet leeg, break"
                     heeftRuimte = False
-                    break
             for k in range(house.length + spiraal):
                 if heeftRuimte == False:
                     print "heeftRuimte is False, break"
-                    break
                 elif self.map.data.get((crawler.x, crawler.y)) != "huis":
                     crawler.y += 1
                     print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
                 else:
                     print "plaats is niet leeg, break"
                     heeftRuimte = False
-                    break
             spiraal += 1
             for l in range(house.width + spiraal):
                 if heeftRuimte == False:
                     print "heeftRuimte is false, break"
-                    break
                 elif self.map.data.get((crawler.x, crawler.y)) != "huis":
                     crawler.x -= 1
                     print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
-
                 else:
                     print "plaats is niet leeg, break"
                     heeftRuimte = False
-                    break
             for m in range(house.length + spiraal):
                 if heeftRuimte == False:
                     print "heeftRuimte is False, break"
-                    break
                 elif self.map.data.get((crawler.x, crawler.y)) != "huis":
                     crawler.y -= 1
                     print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
                 else:
                     print "plaats is niet leeg, break"
                     heeftRuimte = False
-                    break
             spiraal += 1
             vrijstand += 1
             print "volgende loop"
