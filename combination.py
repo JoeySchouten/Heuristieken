@@ -103,7 +103,7 @@ class Combination(object):
                             print "Gehele gebied is leeg. Plaatsen huis."
                             self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
                             print "Invullen kaart"
-                            self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
+                            #self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
                             miny = crawler.y + reqspacey
                             crawler.setPoint(crawler.x + reqspacex, crawler.y)
                             print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
