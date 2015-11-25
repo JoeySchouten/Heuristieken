@@ -17,12 +17,59 @@
 		124,4,16,16,Eengezins
 		148,4,16,16,Eengezins
 		172,4,16,16,Eengezins
-		198,6,20,15,Bungalow
-		225,6,20,15,Bungalow
-		252,6,20,15,Bungalow
-		264,44,21,22,Villa
-		12,89,21,22,Villa
-		46,77,0,0,Water
+		196,4,16,16,Eengezins
+		220,4,16,16,Eengezins
+		244,4,16,16,Eengezins
+		268,4,16,16,Eengezins
+		4,28,16,16,Eengezins
+		28,28,16,16,Eengezins
+		52,28,16,16,Eengezins
+		76,28,16,16,Eengezins
+		100,28,16,16,Eengezins
+		124,28,16,16,Eengezins
+		148,28,16,16,Eengezins
+		172,28,16,16,Eengezins
+		196,28,16,16,Eengezins
+		220,28,16,16,Eengezins
+		244,28,16,16,Eengezins
+		268,28,16,16,Eengezins
+		4,52,16,16,Eengezins
+		28,52,16,16,Eengezins
+		52,52,16,16,Eengezins
+		76,52,16,16,Eengezins
+		100,52,16,16,Eengezins
+		124,52,16,16,Eengezins
+		148,52,16,16,Eengezins
+		172,52,16,16,Eengezins
+		196,52,16,16,Eengezins
+		220,52,16,16,Eengezins
+		244,52,16,16,Eengezins
+		268,52,16,16,Eengezins
+		6,78,20,15,Bungalow
+		33,78,20,15,Bungalow
+		60,78,20,15,Bungalow
+		87,78,20,15,Bungalow
+		114,78,20,15,Bungalow
+		141,78,20,15,Bungalow
+		168,78,20,15,Bungalow
+		195,78,20,15,Bungalow
+		222,78,20,15,Bungalow
+		249,78,20,15,Bungalow
+		276,78,20,15,Bungalow
+		6,110,20,15,Bungalow
+		33,110,20,15,Bungalow
+		60,110,20,15,Bungalow
+		87,110,20,15,Bungalow
+		120,116,21,22,Villa
+		166,116,21,22,Villa
+		212,116,21,22,Villa
+		258,116,21,22,Villa
+		12,161,21,22,Villa
+		58,161,21,22,Villa
+		104,161,21,22,Villa
+		150,161,21,22,Villa
+		196,161,21,22,Villa
+		230,149,60,65,Water
 	</textarea>
 	<script>
 	var canvas = document.getElementById('veld');
@@ -30,7 +77,7 @@
 	var str = document.getElementById("huisplaats").innerText;
 
 	canvas.style.background = 'lightgreen';
-	
+
 	// splitst op de nieuwe lijn
 	var wijkdata = str.split("\n");
 	var xcor = [];
@@ -38,7 +85,7 @@
 	var huislen = [];
 	var huiswid = [];
 	var huisval = []
-	
+
 		// wijkdata tekenen
 		for (var i in wijkdata) {
 			var data = wijkdata[i].split(",");
@@ -57,13 +104,13 @@
 
 		for(x = 0; x < xcor.length; x++){
 			if (huisval[x] === "Eengezins") {
-				context.fillStyle = "gray";				
+				context.fillStyle = "gray";
 			} else if (huisval[x] === "Bungalow") {
-				context.fillStyle = "brown";				
+				context.fillStyle = "brown";
 			} else if (huisval[x] === "Villa") {
-				context.fillStyle = "#262626";				
+				context.fillStyle = "#262626";
 			} else if (huisval[x] === "Water") {
-				context.fillStyle = "#00DDDD";				
+				context.fillStyle = "#00DDDD";
 			}
 			context.fillRect(xcor[x],ycor[x],huiswid[x],huislen[x]);
 	   	}
