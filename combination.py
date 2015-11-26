@@ -13,40 +13,41 @@ class Combination(object):
             self.houses.append(Villa())
         for x in range(bodies):
             self.houses.append(Water())
-        return len(self.houses) == amt + bodies
+        del self.houses[(amt+bodies):]
 
-    # berekening voor de min/max lengtes van het water (gaan nu even uit van 1 lichaam)
+    # berekening voor de min/max lengtes van het water
     def randWaterCalc(self, bodies):
         watersizes = []
-        minwater = 4800
-        surface = []
-        for x in range(bodies):
-            surface.append(int((1/bodies)*minwater))
+        minwater = int(((self.map.width*self.map.length)*0.2)/bodies)
         for n in range(bodies):
             inrange = False
+            foundrange = False
             rangemin = 0
             rangemax = 0
             for i in range(1,200):
-                ratio = (surface[n]/i)/i
+                ratio = (minwater/i)/i
                 if inrange == False:
                     if ratio >= 1 and ratio <=4:
                         rangemin = i
                         inrange = True
-                else:
+                elif inrange == True and foundrange == False:
                     if ratio < 1 or ratio > 4:
                         rangemax = i-1
-                        break
+                        foundrange = True
+                else:
+                    pass
             watersizes.append([])
             watersizes[n].append(random.randint(rangemin,rangemax))
             watersizes[n].append(minwater/watersizes[n][0])
         return watersizes
 
     def setWaterSizes(self, sizearray):
-        #gaat ervanuit dat de laatste 4 entries in de houselist water is
+        #gaat ervanuit dat de laatste entries in de houselist water zijn
         n = 0
-        for i in range(len(self.houses[(-(self.bodies)) : (len(sizearray)) ])):
-            self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
-            n = n + 1
+        for i in range(len(self.houses)):
+            if self.houses[i].type == "Water":
+                self.houses[i].setSize(sizearray[n][0],sizearray[n][1])
+                n = n + 1
 
     # initializes class and initializes map and house list as well
     def __init__(self, amt, bodies):
@@ -54,8 +55,9 @@ class Combination(object):
         self.houses = []
         self.bodies = bodies
         self.createHouseList(amt, bodies)
-        self.watersizes = self.randWaterCalc(bodies)
-        self.setWaterSizes(self.watersizes)
+        if bodies > 0:
+            self.watersizes = self.randWaterCalc(bodies)
+            self.setWaterSizes(self.watersizes)
 
     #function to place houses on map
     def placeAll(self):
@@ -70,6 +72,7 @@ class Combination(object):
 
             while self.houses[x].geplaatst == False:
                 isLegal = True
+                alignChanged = False
 
                 # kijkt of point bestaat
                 print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
@@ -85,7 +88,10 @@ class Combination(object):
                         crawler.x = 0
                         crawler.y = miny
                         print "Niet genoeg ruimte op x-as; crawler verplaatst naar ", crawler.x, crawler.y
-                    elif crawler.y + reqspacey > self.map.length:
+                    elif crawler.y + reqspacey > self.map.length and changeAlign == True:
+                        print "Niet genoeg ruimte op y-as; object wordt gedraaid."
+                        self.houses[x].changeAlign()
+                    elif crawler.y + reqspacey > self.map.length and changeAlign == True:
                         print "Niet genoeg ruimte op y-as; kaart vol. break."
                         break
                     else:
@@ -96,20 +102,20 @@ class Combination(object):
                                 checkx = crawler.x + z
                                 checky = crawler.y + y
                                 if self.map.data.get((checkx, checky)) != "leeg":
-                                    print "Punt ", checkx, checky, "is niet leeg."
+                                    print "Punt", checkx, checky, "is niet leeg."
                                     isLegal = False
-                        if isLegal == True:
-                            #plaats huis
-                            print "Gehele gebied is leeg. Plaatsen huis."
-                            self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
-                            print "Invullen kaart"
-                            #self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
-                            miny = crawler.y + reqspacey
-                            crawler.setPoint(crawler.x + reqspacex, crawler.y)
-                            print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
-                        else:
-                            crawler.move(self.map.width)
-                            print "Plaatsing niet legaal, crawler verplaatst naar:", crawler.x, crawler.y
+                    if isLegal == True:
+                        #plaats huis
+                        print "Gehele gebied is leeg. Plaatsen huis."
+                        self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
+                        print "Invullen kaart"
+                        #self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
+                        miny = crawler.y + reqspacey - self.houses[x].minVrij
+                        crawler.setPoint((crawler.x + reqspacex-self.houses[x].minVrij), crawler.y)
+                        print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
+                    else:
+                        crawler.move(self.map.width)
+                        print "Plaatsing niet legaal, crawler verplaatst naar:", crawler.x, crawler.y
                 else:
                     crawler.move(self.map.width)
                     print "Huidig punt is niet leeg, crawler verplaatst naar:", crawler.x, crawler.y
