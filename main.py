@@ -1,10 +1,10 @@
 import csv
 from combination import Combination
 import random
+from vrijstand import checkVrijstand
 
 # create object containing "dumb solution"
-dumbsol = Combination(12, 1)
+dumbsol = Combination(20, 4)
 dumbsol.placeAll()
+dumbsol.evalueer()
 dumbsol.printToCSV()
-dumbsol.totaleVrijstand()
-#print dumbsol.map.data

@@ -1,6 +1,7 @@
 import csv
 from classes import *
 import random
+from vrijstand import checkVrijstand
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
@@ -13,7 +14,7 @@ class Combination(object):
             self.houses.append(Villa())
         for x in range(bodies):
             self.houses.append(Water())
-        del self.houses[(amt+bodies):]
+        del self.houses[(amt+bodies+1):]
 
     # berekening voor de min/max lengtes van het water
     def randWaterCalc(self, bodies):
@@ -58,6 +59,7 @@ class Combination(object):
         if bodies > 0:
             self.watersizes = self.randWaterCalc(bodies)
             self.setWaterSizes(self.watersizes)
+        self.evaluatie = []
 
     #function to place houses on map
     def placeAll(self):
@@ -120,59 +122,38 @@ class Combination(object):
                     crawler.move(self.map.width)
                     print "Huidig punt is niet leeg, crawler verplaatst naar:", crawler.x, crawler.y
 
-
-    # functie voor het berekenen van de vrijstand van een huis
-    def berekenVrijstand(self, house):
-        crawler = Point(house.hoekpunt.x, (house.hoekpunt.y - 1))
-        spiraal = 0
-        vrijstand = 0
-        # variabele die aangeeft of er nog vrije ruimte is
-        heeftRuimte = True
-        while heeftRuimte == True:
-            for j in range(house.width + spiraal):
-                if self.map.data.get((crawler.x, crawler.y)) != "huis":
-                    crawler.x += 1
-                else:
-                    print "plaats is niet leeg, break"
-                    heeftRuimte = False
-            for k in range(house.length + spiraal):
-                if heeftRuimte == False:
-                    print "heeftRuimte is False, break"
-                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
-                    crawler.y += 1
-                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
-                else:
-                    print "plaats is niet leeg, break"
-                    heeftRuimte = False
-            spiraal += 1
-            for l in range(house.width + spiraal):
-                if heeftRuimte == False:
-                    print "heeftRuimte is false, break"
-                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
-                    crawler.x -= 1
-                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
-                else:
-                    print "plaats is niet leeg, break"
-                    heeftRuimte = False
-            for m in range(house.length + spiraal):
-                if heeftRuimte == False:
-                    print "heeftRuimte is False, break"
-                elif self.map.data.get((crawler.x, crawler.y)) != "huis":
-                    crawler.y -= 1
-                    print "plaats is leeg, verplaatsen naar:", crawler.x, crawler.y
-                else:
-                    print "plaats is niet leeg, break"
-                    heeftRuimte = False
-            spiraal += 1
-            vrijstand += 1
-            print "volgende loop"
-        return vrijstand
-
-    # funtie voor het berekenen van de vrijstand van alle huizen
-    def totaleVrijstand(self):
+    # funtie voor het berekenen van de vrijstand van 1 huis
+    def geefVrijstand(self, huis, index):
+        vrijstand = 2000
         for i in range(len(self.houses)):
-            self.houses[i].extraVrij = self.berekenVrijstand(self.houses[i])
-            print self.houses[i].extraVrij
+                if i == index:
+                    pass
+                else:
+                    temp = checkVrijstand(huis, self.houses[i])
+                    if temp < vrijstand:
+                        vrijstand = temp
+        return vrijstand - huis.minVrij
+
+    def berekenWaarde(self, huis):
+        if huis.extraVrij > 0:
+            factor = 1 + ((huis.meerpermeter * huis.extraVrij)/100)
+        else:
+            factor = 1
+        return huis.waarde * factor
+
+    def evalueer(self):
+        evaluatie = []
+        vrijtotaal = 0
+        geldtotaal = 0
+        for i in range(len(self.houses)-self.bodies):
+            #bereken vrijstand huis + sla op
+            self.houses[i].extraVrij = self.geefVrijstand(self.houses[i], i)
+            vrijtotaal = vrijtotaal + self.houses[i].extraVrij
+            # bereken waarde huis
+            geldtotaal = geldtotaal + self.berekenWaarde(self.houses[i])
+        evaluatie.append(vrijtotaal)
+        evaluatie.append(geldtotaal)
+        self.evaluatie = evaluatie
 
 
     #function to print to csv file for visualisation
@@ -183,5 +164,6 @@ class Combination(object):
             writer = csv.writer(output)
             for i in range(len(self.houses)):
                 writer.writerow((self.houses[i].hoekpunt.x, self.houses[i].hoekpunt.y, self.houses[i].length, self.houses[i].width, self.houses[i].type))
+            writer.writerow(("Totale Vrijstand:", self.evaluatie[0], "Totale Waarde:", self.evaluatie[1], "Wijkwaarden"))
         finally:
             output.close()

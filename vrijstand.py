@@ -1,5 +1,3 @@
-
-
 def checkVrijstand(huis1, huis2):
 	vrijstand = 0
 	isLeft = False
