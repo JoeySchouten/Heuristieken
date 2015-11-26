@@ -7,4 +7,6 @@ output.csv
 output.csv
 documentatie/JavaScript/index.html
 *.csv
-*.csv
+combination.pyc
+graphic/index.html
+*.pyc

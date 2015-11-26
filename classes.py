@@ -10,6 +10,8 @@ class House(object):
         self.minVrij = 0
         self.hoekpunt = Point(0,0)
         self.geplaatst = False
+        self.extraVrij = 0
+        self.waarde = 0
 
     def setSize(self, length, width):
         self.length = length
@@ -32,6 +34,8 @@ class Eengezins(House):
         super(Eengezins, self).setSize(16,16)
         self.minVrij = 4
         self.type = "Eengezins"
+        self.waarde = 285000
+        self.meerpermeter = 3
 
 class Bungalow(House):
     def __init__(self):
@@ -39,6 +43,8 @@ class Bungalow(House):
         super(Bungalow, self).setSize(20,15)
         self.minVrij = 6
         self.type = "Bungalow"
+        self.waarde = 399000
+        self.meerpermeter = 4
 
 class Villa(House):
     def __init__(self):
@@ -46,6 +52,8 @@ class Villa(House):
         super(Villa, self).setSize(21,22)
         self.minVrij = 12
         self.type = "Villa"
+        self.waarde = 610000
+        self.meerpermeter = 6
 
 class Water(House):
     def __init__(self):
@@ -85,6 +93,7 @@ class Map(object):
             for y in range(self.width):
                 self.data[x,y] = "leeg"
 
+    #wordt niet langer gebruikt (verwijderen?)
     def fill(self, keyx, keyy, vrij, width, length):
         # vul rijen met complete vrijstand
         for i in range(vrij):
@@ -98,15 +107,15 @@ class Map(object):
             # loop vrijstand
             for b in range(vrij):
                 self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress = progress + 1
+                progress += 1
             # loop huis
             for c in range(width):
                 self.data[keyx+progress,keyy+a] = "huis"
-                progress = progress + 1
+                progress += 1
             # loop vrijstand
             for d in range(vrij):
                 self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress = progress + 1
+                progress += 1
         #vul rijen met complete vrijstand weer
         keyy= keyy+length
         for j in range(vrij):
