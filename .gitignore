@@ -9,3 +9,4 @@ documentatie/JavaScript/index.html
 *.csv
 combination.pyc
 graphic/index.html
+*.pyc

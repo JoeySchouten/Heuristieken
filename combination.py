@@ -21,6 +21,7 @@ class Combination(object):
         minwater = int(((self.map.width*self.map.length)*0.2)/bodies)
         for n in range(bodies):
             inrange = False
+            foundrange = False
             rangemin = 0
             rangemax = 0
             for i in range(1,200):
@@ -29,10 +30,12 @@ class Combination(object):
                     if ratio >= 1 and ratio <=4:
                         rangemin = i
                         inrange = True
-                else:
+                elif inrange == True and foundrange == False:
                     if ratio < 1 or ratio > 4:
                         rangemax = i-1
-                        break
+                        foundrange = True
+                else:
+                    pass
             watersizes.append([])
             watersizes[n].append(random.randint(rangemin,rangemax))
             watersizes[n].append(minwater/watersizes[n][0])

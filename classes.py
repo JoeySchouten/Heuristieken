@@ -52,6 +52,7 @@ class Water(House):
     def __init__(self):
         super(Water, self).__init__()
         self.type = "Water"
+        self.minVrij = 1
 
     def setSize(self, length, width):
         self.length = length
