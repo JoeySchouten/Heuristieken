@@ -25,3 +25,4 @@ def graphMaken(uitkomsten):
 	plt.ylabel('Waarde in Euro\'s')
 	plt.xlabel('Iteratie')
 	plt.show()
+	plt.savefig('graph.png', dpi=300, bbox_inches='tight')

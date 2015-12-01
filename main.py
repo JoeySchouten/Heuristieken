@@ -2,6 +2,7 @@ import csv
 from combination import Combination
 import random
 from vrijstand import checkVrijstand
+from graph import *
 
 hoogstewaarde = 0
 iteratie = 0
@@ -22,3 +23,6 @@ while iteratie < maxcombinaties:
             hoogstewaarde = temp[1]
     uitkomsten.append(hoogstewaarde)
     iteratie += 1
+    mapMaken(combinatie.houses)
+
+graphMaken(uitkomsten)
