@@ -1,18 +1,27 @@
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
-def mapMaken():
-	import matplotlib.pyplot as plt
-	import matplotlib.patches as patches
-
+def mapMaken(huizen):
 	fig1 = plt.figure()
 	ax1 = fig1.add_subplot(111, aspect='equal')
 	plt.axis([0, 320, 0, 300])
 	plt.axis('off')
 	ax1.add_patch(patches.Rectangle((0, 0), 320, 300, facecolor="lightgreen", edgecolor="none"))
-	ax1.add_patch(patches.Rectangle((200, 220), 16, 16, facecolor="gray", edgecolor="none"))
-	ax1.add_patch(patches.Rectangle((100, 120), 15, 20, facecolor="brown", edgecolor="none"))
-	ax1.add_patch(patches.Rectangle((10, 12), 22, 21, facecolor="black", edgecolor="none"))
-	ax1.add_patch(patches.Rectangle((10, 120), 80, 20, facecolor="lightblue", edgecolor="none"))
-	fig1.savefig('rect1.png', dpi=300, bbox_inches='tight')
 
-def graphMaken():
-	#TODO
+	for i in range(len(huizen)):
+		if huizen[i].type == "Eengezins":
+			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="gray", edgecolor="none"))
+		elif huizen[i].type == "Bungalow":
+			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="brown", edgecolor="none"))
+		elif huizen[i].type == "Villa":
+			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="black", edgecolor="none"))
+		elif huizen[i].type == "Water":
+			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="lightblue", edgecolor="none"))
+
+	fig1.savefig('map.png', dpi=300, bbox_inches='tight')
+
+def graphMaken(uitkomsten):
+	plt.plot(uitkomsten)
+	plt.ylabel('Waarde in Euro\'s')
+	plt.xlabel('Iteratie')
+	plt.show()
