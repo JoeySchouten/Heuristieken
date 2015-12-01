@@ -125,13 +125,14 @@ class Combination(object):
     # funtie voor het berekenen van de vrijstand van 1 huis
     def geefVrijstand(self, huis, index):
         vrijstand = 2000
-        for i in range(len(self.houses)):
+        for i in range(len(self.houses) - self.bodies):
                 if i == index:
                     pass
                 else:
                     temp = checkVrijstand(huis, self.houses[i])
                     if temp < vrijstand:
                         vrijstand = temp
+        print vrijstand
         return vrijstand - huis.minVrij
 
     def berekenWaarde(self, huis):
@@ -145,12 +146,12 @@ class Combination(object):
         evaluatie = []
         vrijtotaal = 0
         geldtotaal = 0
-        for i in range(len(self.houses)-self.bodies):
+        for i in range(len(self.houses) - self.bodies):
             #bereken vrijstand huis + sla op
             self.houses[i].extraVrij = self.geefVrijstand(self.houses[i], i)
-            vrijtotaal = vrijtotaal + self.houses[i].extraVrij
+            vrijtotaal += self.houses[i].extraVrij
             # bereken waarde huis
-            geldtotaal = geldtotaal + self.berekenWaarde(self.houses[i])
+            geldtotaal += self.berekenWaarde(self.houses[i])
         evaluatie.append(vrijtotaal)
         evaluatie.append(geldtotaal)
         self.evaluatie = evaluatie
