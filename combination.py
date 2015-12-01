@@ -170,17 +170,15 @@ class Combination(object):
             # geef willekeurige waarden voor hoekpunt huis
             x = random.randint(minx,maxx)
             y = random.randint(miny,maxy)
+            huis.hoekpunt.setPoint(x,y)
             # controleer overlap met alle huizen
             for i in range(len(self.houses)):
                 if i == index:
                     pass
                 else:
-                    if (self.houses[i].hoekpunt.x > x and self.houses[i].hoekpunt.x < x + huis.width) or ((self.houses[i].hoekpunt.x + self.houses[i].width) > x and (self.houses[i].hoekpunt.x + self.houses[i].width) < x + huis.width):
-        		        if (self.houses[i].hoekpunt.y > y and self.houses[i].hoekpunt.y < y + huis.length) or ((self.houses[i].hoekpunt.y + self.houses[i].length) > y and (self.houses[i].hoekpunt.y + self.houses[i].length) < y + huis.length):
-        			        # error-> plaatsen niet mogelijk
-        			        mogelijk = False
+                    if checkVrijstand(huis, self.houses[i]) < huis.minVrij:
+        			    mogelijk = False
             if mogelijk == True:
-                huis.hoekpunt.setPoint(x,y)
                 gelukt = True
             iteraties += 1
         return True
