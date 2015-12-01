@@ -2,6 +2,7 @@ import csv
 from classes import *
 import random
 from vrijstand import checkVrijstand
+maxiteraties = 100
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
@@ -132,7 +133,7 @@ class Combination(object):
                     temp = checkVrijstand(huis, self.houses[i])
                     if temp < vrijstand:
                         vrijstand = temp
-        return vrijstand - huis.minVrij
+        return vrijstand
 
     def berekenWaarde(self, huis):
         if huis.extraVrij > 0:
@@ -154,6 +155,35 @@ class Combination(object):
         evaluatie.append(vrijtotaal)
         evaluatie.append(geldtotaal)
         self.evaluatie = evaluatie
+
+    def placeRandom(self, huis, index):
+        gelukt = False
+        mogelijk = True
+        iteraties = 0
+        minx = 0 + huis.minVrij
+        miny = 0 + huis.minVrij
+        maxx = self.map.width - huis.minVrij
+        maxy = self.map.length - huis.minVrij
+        while gelukt == False:
+            if iteratie == maxiteraties:
+                return False
+            # geef willekeurige waarden voor hoekpunt huis
+            x = random.randint(minx,maxx)
+            y = random.randint(miny,maxy)
+            # controleer overlap met alle huizen
+            for i in range(len(self.houses)):
+                if i == index:
+                    pass
+                else:
+                    if (self.houses[i].hoekpunt.x > x and self.houses[i].hoekpunt.x < x + huis.width) or ((self.houses[i].hoekpunt.x + self.houses[i].width) > x and (self.houses[i].x + self.houses[i].width) < x + huis.width):
+        		        if (self.houses[i].hoekpunt.y > y and self.houses[i].hoekpunt.y < y + huis.length) or ((self.houses[i].hoekpunt.y + self.houses[i].length) > y and (self.houses[i].y + self.houses[i].length) < y + huis.y):
+        			        # error-> plaatsen niet mogelijk
+        			        mogelijk = False
+            if mogelijk = True:
+                huis.hoekpunt.setPoint(x,y)
+                gelukt = True
+            iteratie += 1
+        return True
 
 
     #function to print to csv file for visualisation
