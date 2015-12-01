@@ -133,12 +133,7 @@ class Combination(object):
                     temp = checkVrijstand(huis, self.houses[i])
                     if temp < vrijstand:
                         vrijstand = temp
-<<<<<<< HEAD
-        return vrijstand
-=======
-        print vrijstand
         return vrijstand - huis.minVrij
->>>>>>> refs/remotes/origin/master
 
     def berekenWaarde(self, huis):
         if huis.extraVrij > 0:

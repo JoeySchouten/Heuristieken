@@ -15,7 +15,8 @@ while iteratie < maxcombinaties:
         if combinatie.placeRandom(self.houses[i], i) != True:
             error = True
     if error == False:
-        temp = combinatie.evalueer()
+    combinatie.evalueer()
+    temp = combinatie.evaluatie
         if temp[1] > hoogstewaarde:
             hoogstewaarde = temp[1]
     uitkomsten.append(hoogstewaarde)
