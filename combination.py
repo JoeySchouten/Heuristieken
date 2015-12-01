@@ -165,7 +165,7 @@ class Combination(object):
         maxx = self.map.width - huis.minVrij
         maxy = self.map.length - huis.minVrij
         while gelukt == False:
-            if iteratie == maxiteraties:
+            if iteraties == maxiteraties:
                 return False
             # geef willekeurige waarden voor hoekpunt huis
             x = random.randint(minx,maxx)
@@ -175,14 +175,14 @@ class Combination(object):
                 if i == index:
                     pass
                 else:
-                    if (self.houses[i].hoekpunt.x > x and self.houses[i].hoekpunt.x < x + huis.width) or ((self.houses[i].hoekpunt.x + self.houses[i].width) > x and (self.houses[i].x + self.houses[i].width) < x + huis.width):
-        		        if (self.houses[i].hoekpunt.y > y and self.houses[i].hoekpunt.y < y + huis.length) or ((self.houses[i].hoekpunt.y + self.houses[i].length) > y and (self.houses[i].y + self.houses[i].length) < y + huis.y):
+                    if (self.houses[i].hoekpunt.x > x and self.houses[i].hoekpunt.x < x + huis.width) or ((self.houses[i].hoekpunt.x + self.houses[i].width) > x and (self.houses[i].hoekpunt.x + self.houses[i].width) < x + huis.width):
+        		        if (self.houses[i].hoekpunt.y > y and self.houses[i].hoekpunt.y < y + huis.length) or ((self.houses[i].hoekpunt.y + self.houses[i].length) > y and (self.houses[i].hoekpunt.y + self.houses[i].length) < y + huis.length):
         			        # error-> plaatsen niet mogelijk
         			        mogelijk = False
-            if mogelijk = True:
+            if mogelijk == True:
                 huis.hoekpunt.setPoint(x,y)
                 gelukt = True
-            iteratie += 1
+            iteraties += 1
         return True
 
 
