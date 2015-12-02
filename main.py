@@ -1,18 +1,24 @@
 import csv
 from combination import Combination
 import random
-from vrijstand import checkVrijstand
 from graph import *
+import matplotlib.pyplot as plt
 
+aantalhuizen = 20
+aantalwater = 4
+maxcombinaties = 100
+plotymin = 0
+plotymax = 15000000
+
+uitkomsten = []
 hoogstewaarde = 0
 iteratie = 0
-maxcombinaties = 10
-uitkomsten = []
-# create object containing "dumb solution"
+best = 0
+
 while iteratie < maxcombinaties:
     error = False
-    combinatie = Combination(20, 4)
-    combinatie.placeAll()
+    combinatie = Combination(aantalhuizen, aantalwater)
+    #combinatie.placeAll()
     for i in range(len(combinatie.houses)):
         if combinatie.placeRandom(combinatie.houses[i], i) != True:
             error = True
@@ -21,8 +27,22 @@ while iteratie < maxcombinaties:
         temp = combinatie.evaluatie
         if temp[1] > hoogstewaarde:
             hoogstewaarde = temp[1]
+            best = combinatie
     uitkomsten.append(hoogstewaarde)
+    if iteratie == 0:
+        combinatie.evalueer()
+        temp = combinatie.evaluatie
+        if temp[1] > hoogstewaarde:
+            hoogstewaarde = temp[1]
+            best = combinatie
+        plt.ion()
+        plotymin = hoogstewaarde
+        plt.axis([0.0,maxcombinaties, plotymin, plotymax])
+        plt.show()
     iteratie += 1
-    mapMaken(combinatie.houses)
+    plt.scatter(iteratie, hoogstewaarde)
+    plt.draw()
 
-graphMaken(uitkomsten)
+mapMaken(best.houses)
+best.evalueer()
+best.printToCSV()

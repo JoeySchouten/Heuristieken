@@ -12,6 +12,7 @@ class House(object):
         self.geplaatst = False
         self.extraVrij = 0
         self.waarde = 0
+        self.meerpermeter = 0
 
     def setSize(self, length, width):
         self.length = length
