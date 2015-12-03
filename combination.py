@@ -9,12 +9,12 @@ class Combination(object):
     def createHouseList(self, amt, bodies):
         for x in range(bodies):
             self.houses.append(Water())
-        for x in range(int(0.6*amt)):
-            self.houses.append(Eengezins())
-        for x in range(int(0.25*amt)):
-            self.houses.append(Bungalow())
         for x in range(int(0.15*amt)):
             self.houses.append(Villa())
+        for x in range(int(0.25*amt)):
+            self.houses.append(Bungalow())
+        for x in range(int(0.6*amt)):
+            self.houses.append(Eengezins())
         del self.houses[(amt+bodies+1):]
 
     # berekening voor de min/max lengtes van het water
@@ -181,15 +181,17 @@ class Combination(object):
                     xH2 = self.houses[i].hoekpunt.x
                     yH2 = self.houses[i].hoekpunt.y
                     #check if H2 left and right corners are within H1's x-range
-                    if xH1 <= xH2 <= xH1+huis.width or xH1 <= xH2+self.houses[i].width <= xH1+huis.width:
+                    if (xH1 - huis.minVrij <= xH2 <= xH1 + huis.width + huis.minVrij) or (xH1 - huis.minVrij <= xH2+self.houses[i].width <= xH1 + huis.width + huis.minVrij):
                         #check if H2 top and bottom corners are within H1's y-range
-                        if yH1 <= yH2 <= yH1+huis.length or yH1 <= yH2+self.houses[i].length <= yH1+huis.length:
+                        if (yH1 - huis.minVrij <= yH2 <= yH1 + huis.length + huis.minVrij) or (yH1 - huis.minVrij <= yH2+self.houses[i].length <= yH1 + huis.length + huis.minVrij):
                             mogelijk = False
                     #check if H1 left and right corners are within H2's x-range
-                    elif xH2 <= xH1 <= xH2+self.houses[i].width or xH2 <= xH1+huis.width <= xH2+self.houses[i].width:
+                    if (xH2 - self.houses[i].minVrij <= xH1 <= xH2 + self.houses[i].width + self.houses[i].minVrij) or (xH2 - self.houses[i].minVrij <= xH1+huis.width <= xH2 + self.houses[i].width + self.houses[i].minVrij):
                         #check if H1 top and bottom corners are within H2's y-range
-                        if yH2 <= yH1 <= yH2+self.houses[i].length or yH2 <= yH1+huis.length <= yH2+self.houses[i].length:
+                        if (yH2 - self.houses[i].minVrij <= yH1 <= yH2+self.houses[i].length + self.houses[i].minVrij) or (yH2 - self.houses[i].minVrij <= yH1+huis.length <= yH2 + self.houses[i].length + self.houses[i].minVrij):
                             mogelijk = False
+                    # checken van water om 'kruisingen' te voorkomen
+                    # betekent dat beide delen wel in elkaars bereik liggen, maar de punten zelf niet.
             if mogelijk == True:
                 huis.hoekpunt.setPoint(xH1,yH1)
                 gelukt = True
