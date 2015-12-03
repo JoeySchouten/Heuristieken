@@ -2,19 +2,19 @@ import csv
 from classes import *
 import random
 from vrijstand import checkVrijstand
-maxiteraties = 100
+
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
     def createHouseList(self, amt, bodies):
+        for x in range(bodies):
+            self.houses.append(Water())
         for x in range(int(0.6*amt)):
             self.houses.append(Eengezins())
         for x in range(int(0.25*amt)):
             self.houses.append(Bungalow())
         for x in range(int(0.15*amt)):
             self.houses.append(Villa())
-        for x in range(bodies):
-            self.houses.append(Water())
         del self.houses[(amt+bodies+1):]
 
     # berekening voor de min/max lengtes van het water
@@ -159,26 +159,39 @@ class Combination(object):
     def placeRandom(self, huis, index):
         gelukt = False
         mogelijk = True
+        maxiteraties = 1000
         iteraties = 0
         minx = 0 + huis.minVrij
         miny = 0 + huis.minVrij
-        maxx = self.map.width - huis.minVrij
-        maxy = self.map.length - huis.minVrij
+        maxx = self.map.width - (huis.minVrij + huis.width)
+        maxy = self.map.length - (huis.minVrij + huis.length)
         while gelukt == False:
             if iteraties == maxiteraties:
                 return False
             # geef willekeurige waarden voor hoekpunt huis
-            x = random.randint(minx,maxx)
-            y = random.randint(miny,maxy)
-            huis.hoekpunt.setPoint(x,y)
+            xH1 = random.randint(minx,maxx)
+            yH1 = random.randint(miny,maxy)
+            mogelijk = True
+
             # controleer overlap met alle huizen
             for i in range(len(self.houses)):
                 if i == index:
                     pass
                 else:
-                    if checkVrijstand(huis, self.houses[i]) < huis.minVrij:
-        			    mogelijk = False
+                    xH2 = self.houses[i].hoekpunt.x
+                    yH2 = self.houses[i].hoekpunt.y
+                    #check if H2 left and right corners are within H1's x-range
+                    if xH1 <= xH2 <= xH1+huis.width or xH1 <= xH2+self.houses[i].width <= xH1+huis.width:
+                        #check if H2 top and bottom corners are within H1's y-range
+                        if yH1 <= yH2 <= yH1+huis.length or yH1 <= yH2+self.houses[i].length <= yH1+huis.length:
+                            mogelijk = False
+                    #check if H1 left and right corners are within H2's x-range
+                    elif xH2 <= xH1 <= xH2+self.houses[i].width or xH2 <= xH1+huis.width <= xH2+self.houses[i].width:
+                        #check if H1 top and bottom corners are within H2's y-range
+                        if yH2 <= yH1 <= yH2+self.houses[i].length or yH2 <= yH1+huis.length <= yH2+self.houses[i].length:
+                            mogelijk = False
             if mogelijk == True:
+                huis.hoekpunt.setPoint(xH1,yH1)
                 gelukt = True
             iteraties += 1
         return True
