@@ -4,9 +4,9 @@ import random
 from graph import *
 import matplotlib.pyplot as plt
 
-aantalhuizen = 20
+aantalhuizen = 60
 aantalwater = 4
-maxcombinaties = 100
+maxcombinaties = 20
 plotymin = 0
 plotymax = 15000000
 
@@ -35,9 +35,12 @@ while iteratie < maxcombinaties:
         if temp[1] > hoogstewaarde:
             hoogstewaarde = temp[1]
             best = combinatie
+        plt.xlabel('Iteraties')
+        plt.ylabel('Waarde in Euro\'s')
+        plt.title('Amstelhaege Random Sampling')
         plt.ion()
         plotymin = hoogstewaarde
-        plt.axis([0.0,maxcombinaties, plotymin, plotymax])
+        #plt.axis([0.0,maxcombinaties, plotymin, plotymax])
         plt.show()
     iteratie += 1
     plt.scatter(iteratie, hoogstewaarde)
