@@ -84,10 +84,10 @@ class Point(object):
 
 class Map(object):
     def __init__(self):
-                self.data = dict()
+                #self.data = dict()
                 self.length = 300
                 self.width = 320
-                self.initializeMap()
+                #self.initializeMap()
 
     def initializeMap(self):
         for x in range(self.length):

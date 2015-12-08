@@ -20,12 +20,3 @@ def mapMaken(huizen):
 
 	plt.gca().invert_yaxis()
 	fig1.savefig('map.png', dpi=300, bbox_inches='tight')
-
-def graphMaken(uitkomsten):
-	fig1 = plt.figure()
-	plt.plot(uitkomsten)
-	plt.ylabel('Waarde in Euro\'s')
-	plt.xlabel('Iteratie')
-
-	plt.show()
-	fig1.savefig('graph.png', dpi=300, bbox_inches='tight')
