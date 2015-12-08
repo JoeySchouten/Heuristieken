@@ -52,6 +52,7 @@ if sys.argv[2] == "randsample":
         uitkomsten.append(hoogstewaarde)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.draw()
+        plt.suptitle("Hoogste huidige waarde is: " + str(hoogstewaarde), fontsize=13)
         plt.savefig('graph.png', dpi=300, bbox_inches='tight')
         iteratie += 1
 
@@ -90,6 +91,7 @@ elif str(sys.argv[2]) == "schuiven":
         uitkomsten.append(hoogstewaarde)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.draw()
+        plt.suptitle("Hoogste huidige waarde is: " + str(hoogstewaarde), fontsize=13)
         plt.savefig('graph.png', dpi=300, bbox_inches='tight')
         iteratie += 1
 
