@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from combination import Combination
 from graph import *
 from schuiven import schuiven
+from swap import swap
 
 toegestanehuizen = [20,40,60]
 toegestanemethoden = ["randsample", "schuiven", "swappen"]
@@ -96,5 +97,39 @@ elif str(sys.argv[2]) == "schuiven":
         iteratie += 1
 
 elif str(sys.argv[2]) == "swappen":
-    #swapcode
-    pass
+    plt.title('Amstelhaege Swap-Hillclimber')
+    error = True
+    while error == True:
+        error = False
+        # probeer random kaart te bouwen tot het lukt
+        combinatie = Combination(aantalhuizen, aantalwater)
+        for i in range(len(combinatie.houses)):
+            if combinatie.placeRandom(combinatie.houses[i], i) != True:
+                error = True
+        if error == False:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            hoogstewaarde = temp[1]
+            best = combinatie
+            best.evalueer()
+            best.printToCSV()
+            uitkomsten.append(hoogstewaarde)
+            plt.plot(iteratie, hoogstewaarde, '.-r')
+            plt.draw()
+            plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+    # ga schuiven
+    while True:
+        if swap(combinatie) == True:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            if temp[1] > hoogstewaarde:
+                hoogstewaarde = temp[1]
+                best = combinatie
+                #mapMaken(best.houses)
+                best.evalueer()
+                best.printToCSV()
+        uitkomsten.append(hoogstewaarde)
+        plt.plot(iteratie, hoogstewaarde, '.-r')
+        plt.draw()
+        plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+        iteratie += 1
