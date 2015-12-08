@@ -12,9 +12,9 @@ def swap(combinatie):
         xH1 = huis1.hoekpunt.x
         yH1 = huis1.hoekpunt.y
 
-        huis2 = combinatie.houses[random.randint(0, len(combinatie.houses))]
+        huis2 = combinatie.houses[random.randint(1, len(combinatie.houses))]
         while huis1 == huis2:
-            huis2 = combinatie.houses[random.randint(0, len(combinatie.houses))]
+            huis2 = combinatie.houses[random.randint(1, len(combinatie.houses))]
         xH2 = huis2.hoekpunt.x
         yH2 = huis2.hoekpunt.y
 
