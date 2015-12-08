@@ -4,38 +4,23 @@ import random
 from graph import *
 import matplotlib.pyplot as plt
 
-attempts = 0
-maxattempts = 100
-
-# maak een random beginsituatie
-error = True
-combinatie = Combination(aantalhuizen, aantalwater)
-while error == True:
-    error = False
-    for i in range(len(combinatie.houses)):
-        if combinatie.placeRandom(combinatie.houses[i], i) != True:
-            error = True
-combinatie.evalueer()
-tempeval = combinatie.evaluatie
-if tempeval[1] > hoogstewaarde:
-    hoogstewaarde = tempeval[1]
-    best = combinatie
-uitkomsten.append(hoogstewaarde)
-
-while attempts < maxattempts:
-    # kies een willekeurig huis (shuffle array en dan de 1e)
-    random.shuffle(combinatie.houses)
-    # bereken extra vrijstand van huis
-    temp = combinatie.geefVrijstand(combinatie.houses[0], 0)
-    if temp > 0:
-        huis = combinatie.houses[0]
-        hoek = combinatie.houses[0].hoekpunt
-        #   kies plaats om naar toe te schuiven
-        newx = random.randint(hoek.x - temp, hoek.x + temp)
-        newy = random.randint(hoek.y - temp, hoek.y + temp)
-        #   indien mogelijk: verplaats
-        mogelijk = True
-        for i in range(1, len(combinatie.houses)):
+def schuiven(combinatie):
+    attempts = 0
+    maxattempts = 100
+    while attempts < maxattempts:
+        # kies een willekeurig huis (shuffle array en dan de 1e)
+        random.shuffle(combinatie.houses)
+        # bereken extra vrijstand van huis
+        temp = combinatie.geefVrijstand(combinatie.houses[0], 0)
+        if temp > 0:
+            huis = combinatie.houses[0]
+            hoek = combinatie.houses[0].hoekpunt
+            #   kies plaats om naar toe te schuiven
+            newx = random.randint(hoek.x - temp, hoek.x + temp)
+            newy = random.randint(hoek.y - temp, hoek.y + temp)
+            #   indien mogelijk: verplaats
+            mogelijk = True
+            for i in range(1, len(combinatie.houses)):
                 xH2 = combinatie.houses[i].hoekpunt.x
                 yH2 = combinatie.houses[i].hoekpunt.y
                 #check if H2 left and right corners are within H1's x-range
@@ -50,10 +35,12 @@ while attempts < maxattempts:
                         mogelijk = False
                 # checken van water om 'kruisingen' te voorkomen
                 # betekent dat beide delen wel in elkaars bereik liggen, maar de punten zelf niet.
-        if mogelijk == True:
-            huis.hoekpunt.setPoint(newx,newy)
-    else:
-        # indien geen: opnieuw huis kiezen
-        pass
-    attempts += 1
-# bereken waarde; indien hoger, bewaren en opnieuw. Anders verwerpen en opnieuw
+            if mogelijk == True:
+                huis.hoekpunt.setPoint(newx,newy)
+                return True
+        else:
+            # indien geen: opnieuw huis kiezen
+            pass
+        attempts += 1
+    # bereken waarde; indien hoger, bewaren en opnieuw. Anders verwerpen en opnieuw
+    return False
