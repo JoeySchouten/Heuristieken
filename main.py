@@ -58,5 +58,24 @@ elif str(sys.argv[2]) == "schuiven":
     #schuifcode
     pass
 elif str(sys.argv[2]) == "swappen":
-    #swapcode
-    pass
+    plt.title('Amstelhaege Swapping')
+    while True:
+        error = False
+        combinatie = Combination(aantalhuizen, aantalwater)
+        for i in range(len(combinatie.houses)):
+            if combinatie.swapHouse(combinatie.houses[i], i) != True:
+                error = True
+        if error == False:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            if temp[1] > hoogstewaarde:
+                hoogstewaarde = temp[1]
+                best = combinatie
+                #mapMaken(best.houses)
+                best.evalueer()
+                best.printToCSV()
+        uitkomsten.append(hoogstewaarde)
+        plt.plot(iteratie, hoogstewaarde, '.-r')
+        plt.draw()
+        plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+        iteratie += 1
