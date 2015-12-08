@@ -44,7 +44,7 @@ aantalwater = 4
 uitkomsten = []
 hoogstewaarde = 0
 iteratie = 0
-maxverwerpen = 100
+maxverwerpen = 10
 verwerpen = 0
 randommapper = 500
 best = 0
@@ -52,7 +52,7 @@ best = 0
 criterium = 0
 
 #  afvangen hoeveelheid arguments!
-if len(sys.argv) > 4:
+if len(sys.argv) != 4:
     informWrongUsage()
 # sys.argv[] -> 1: aantal huizen; 2:methode; 3: score criterium
 if int(sys.argv[1]) not in toegestanehuizen:
