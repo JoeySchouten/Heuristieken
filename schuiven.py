@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 
 attempts = 0
 maxattempts = 100
-aantalhuizen = 60
-aantalwater = 4
 
 # maak een random beginsituatie
 error = True
