@@ -1,8 +1,6 @@
-import csv
 from classes import *
 import random
 from vrijstand import checkVrijstand
-
 
 class Combination(object):
     # function to fill up house list in class, then shortens list if need be
@@ -61,68 +59,7 @@ class Combination(object):
             self.watersizes = self.randWaterCalc(bodies)
             self.setWaterSizes(self.watersizes)
         self.evaluatie = []
-
-    #function to place houses on map
-    def placeAll(self):
-        crawler = Point(0,0)
-        miny = 0
-
-        #range 1-12 doet het prima
-        for x in range(len(self.houses)):
-            #berekenen min. benodigde ruimte in totaal
-            reqspacex = self.houses[x].minVrij * 2 + self.houses[x].width
-            reqspacey = self.houses[x].minVrij * 2 + self.houses[x].length
-
-            while self.houses[x].geplaatst == False:
-                isLegal = True
-                alignChanged = False
-
-                # kijkt of point bestaat
-                print "Kijken of punt ", crawler.x, crawler.y, "bestaat."
-                while self.map.data.get((crawler.x, crawler.y)) == None:
-                    crawler.move(self.map.width)
-                    print "Punt bestaat niet, crawler verplaatst naar:", crawler.x, crawler.y
-                print "Punt gevonden, controleren op ruimte:"
-
-                # kijkt of point leeg is
-                if self.map.data.get((crawler.x, crawler.y)) != None:
-                    # kijkt of huis nog op de kaart past
-                    if crawler.x + reqspacex > self.map.width:
-                        crawler.x = 0
-                        crawler.y = miny
-                        print "Niet genoeg ruimte op x-as; crawler verplaatst naar ", crawler.x, crawler.y
-                    elif crawler.y + reqspacey > self.map.length and changeAlign == True:
-                        print "Niet genoeg ruimte op y-as; object wordt gedraaid."
-                        self.houses[x].changeAlign()
-                    elif crawler.y + reqspacey > self.map.length and changeAlign == True:
-                        print "Niet genoeg ruimte op y-as; kaart vol. break."
-                        break
-                    else:
-                        # controleren of gebied leeg is voor plaatsing huis
-                        print "Genoeg ruimte op kaart vanaf dit punt. Controleren vrijstand:"
-                        for z in range(reqspacex):
-                            for y in range(reqspacey):
-                                checkx = crawler.x + z
-                                checky = crawler.y + y
-                                if self.map.data.get((checkx, checky)) != "leeg":
-                                    print "Punt", checkx, checky, "is niet leeg."
-                                    isLegal = False
-                    if isLegal == True:
-                        #plaats huis
-                        print "Gehele gebied is leeg. Plaatsen huis."
-                        self.houses[x].place(crawler.x + self.houses[x].minVrij, crawler.y + self.houses[x].minVrij)
-                        print "Invullen kaart"
-                        #self.map.fill(crawler.x, crawler.y, self.houses[x].minVrij, self.houses[x].width, self.houses[x].length)
-                        miny = crawler.y + reqspacey - self.houses[x].minVrij
-                        crawler.setPoint((crawler.x + reqspacex-self.houses[x].minVrij), crawler.y)
-                        print "Plaatsing gelukt, crawler verplaatst naar:", crawler.x, crawler.y
-                    else:
-                        crawler.move(self.map.width)
-                        print "Plaatsing niet legaal, crawler verplaatst naar:", crawler.x, crawler.y
-                else:
-                    crawler.move(self.map.width)
-                    print "Huidig punt is niet leeg, crawler verplaatst naar:", crawler.x, crawler.y
-
+        
     # funtie voor het berekenen van de vrijstand van 1 huis
     def geefVrijstand(self, huis, index):
         vrijstand = 2000
@@ -197,16 +134,3 @@ class Combination(object):
                 gelukt = True
             iteraties += 1
         return True
-
-
-    #function to print to csv file for visualisation
-    # output: corner x, corner y, length, width, type
-    def printToCSV(self):
-        output = open("output.csv", "wb")
-        try:
-            writer = csv.writer(output)
-            for i in range(len(self.houses)):
-                writer.writerow((self.houses[i].hoekpunt.x, self.houses[i].hoekpunt.y, self.houses[i].length, self.houses[i].width, self.houses[i].type))
-            writer.writerow(("Totale Vrijstand:", self.evaluatie[0], "Totale Waarde:", self.evaluatie[1], "Wijkwaarden"))
-        finally:
-            output.close()

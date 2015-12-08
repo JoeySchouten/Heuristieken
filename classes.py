@@ -66,7 +66,6 @@ class Water(House):
         self.length = length
         self.width = width
 
-
 class Point(object):
     def __init__(self, x, y):
         self.x = x
@@ -84,41 +83,28 @@ class Point(object):
 
 class Map(object):
     def __init__(self):
-                #self.data = dict()
-                self.length = 300
-                self.width = 320
-                #self.initializeMap()
+        self.length = 300
+        self.width = 320
 
-    def initializeMap(self):
-        for x in range(self.length):
-            for y in range(self.width):
-                self.data[x,y] = "leeg"
 
-    #wordt niet langer gebruikt (verwijderen?)
-    def fill(self, keyx, keyy, vrij, width, length):
-        # vul rijen met complete vrijstand
-        for i in range(vrij):
-            for n in range(width+2*vrij):
-                self.data[keyx+i,keyy+n] = "moetvrij"
-        #vul rijen met vrijstand|huis|vrijstand
-        #set hoogte key opnieuw voor leesbare coordinates
-        keyy+=vrij
-        progress = 0
-        for a in range(length):
-            # loop vrijstand
-            for b in range(vrij):
-                self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress += 1
-            # loop huis
-            for c in range(width):
-                self.data[keyx+progress,keyy+a] = "huis"
-                progress += 1
-            # loop vrijstand
-            for d in range(vrij):
-                self.data[keyx+progress,keyy+a] = "moetvrij"
-                progress += 1
-        #vul rijen met complete vrijstand weer
-        keyy= keyy+length
-        for j in range(vrij):
-            for n in range(width+2*vrij):
-                self.data[keyx+i,keyy+n] = "moetvrij"
+def createRandom():
+    error = True
+    while error == True:
+        error = False
+        # probeer random kaart te bouwen tot het lukt
+        combinatie = Combination(aantalhuizen, aantalwater)
+        for i in range(len(combinatie.houses)):
+            if combinatie.placeRandom(combinatie.houses[i], i) != True:
+                error = True
+        if error == False:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            hoogstewaarde = temp[1]
+            best = combinatie
+            best.evalueer()
+            best.printToCSV()
+            uitkomsten.append(hoogstewaarde)
+            plt.plot(iteratie, hoogstewaarde, '.-r')
+            plt.draw()
+            plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+    return combinatie

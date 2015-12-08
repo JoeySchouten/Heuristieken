@@ -3,6 +3,7 @@ import sys
 import random
 import matplotlib.pyplot as plt
 from combination import Combination
+from classes import createRandom
 from graph import *
 from schuiven import schuiven
 from swap import swap
@@ -47,9 +48,7 @@ if sys.argv[2] == "randsample":
             if temp[1] > hoogstewaarde:
                 hoogstewaarde = temp[1]
                 best = combinatie
-                #mapMaken(best.houses)
                 best.evalueer()
-                best.printToCSV()
         uitkomsten.append(hoogstewaarde)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.draw()
@@ -59,25 +58,7 @@ if sys.argv[2] == "randsample":
 
 elif str(sys.argv[2]) == "schuiven":
     plt.title('Amstelhaege Schuif-Hillclimber')
-    error = True
-    while error == True:
-        error = False
-        # probeer random kaart te bouwen tot het lukt
-        combinatie = Combination(aantalhuizen, aantalwater)
-        for i in range(len(combinatie.houses)):
-            if combinatie.placeRandom(combinatie.houses[i], i) != True:
-                error = True
-        if error == False:
-            combinatie.evalueer()
-            temp = combinatie.evaluatie
-            hoogstewaarde = temp[1]
-            best = combinatie
-            best.evalueer()
-            best.printToCSV()
-            uitkomsten.append(hoogstewaarde)
-            plt.plot(iteratie, hoogstewaarde, '.-r')
-            plt.draw()
-            plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+    combinatie = createRandom()
     # ga schuiven
     while True:
         if schuiven(combinatie) == True:
@@ -86,9 +67,7 @@ elif str(sys.argv[2]) == "schuiven":
             if temp[1] > hoogstewaarde:
                 hoogstewaarde = temp[1]
                 best = combinatie
-                #mapMaken(best.houses)
                 best.evalueer()
-                best.printToCSV()
         uitkomsten.append(hoogstewaarde)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.draw()
@@ -98,36 +77,16 @@ elif str(sys.argv[2]) == "schuiven":
 
 elif str(sys.argv[2]) == "swappen":
     plt.title('Amstelhaege Swap-Hillclimber')
-    error = True
-    while error == True:
-        error = False
-        # probeer random kaart te bouwen tot het lukt
-        combinatie = Combination(aantalhuizen, aantalwater)
-        for i in range(len(combinatie.houses)):
-            if combinatie.placeRandom(combinatie.houses[i], i) != True:
-                error = True
-        if error == False:
-            combinatie.evalueer()
-            temp = combinatie.evaluatie
-            hoogstewaarde = temp[1]
-            best = combinatie
-            best.evalueer()
-            best.printToCSV()
-            uitkomsten.append(hoogstewaarde)
-            plt.plot(iteratie, hoogstewaarde, '.-r')
-            plt.draw()
-            plt.savefig('graph.png', dpi=300, bbox_inches='tight')
-    # ga schuiven
+    combinatie = createRandom()
+    # ga swappen
     while True:
-        if swap(combinatie) == True:
+        if swapHouse(combinatie) == True:
             combinatie.evalueer()
             temp = combinatie.evaluatie
             if temp[1] > hoogstewaarde:
                 hoogstewaarde = temp[1]
                 best = combinatie
-                #mapMaken(best.houses)
                 best.evalueer()
-                best.printToCSV()
         uitkomsten.append(hoogstewaarde)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.draw()

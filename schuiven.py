@@ -1,8 +1,5 @@
-import csv
 from combination import Combination
 import random
-from graph import *
-import matplotlib.pyplot as plt
 
 def schuiven(combinatie):
     attempts = 0
