@@ -85,26 +85,3 @@ class Map(object):
     def __init__(self):
         self.length = 300
         self.width = 320
-
-
-def createRandom():
-    error = True
-    while error == True:
-        error = False
-        # probeer random kaart te bouwen tot het lukt
-        combinatie = Combination(aantalhuizen, aantalwater)
-        for i in range(len(combinatie.houses)):
-            if combinatie.placeRandom(combinatie.houses[i], i) != True:
-                error = True
-        if error == False:
-            combinatie.evalueer()
-            temp = combinatie.evaluatie
-            hoogstewaarde = temp[1]
-            best = combinatie
-            best.evalueer()
-            best.printToCSV()
-            uitkomsten.append(hoogstewaarde)
-            plt.plot(iteratie, hoogstewaarde, '.-r')
-            plt.draw()
-            plt.savefig('graph.png', dpi=300, bbox_inches='tight')
-    return combinatie

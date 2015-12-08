@@ -6,6 +6,10 @@ def swapHouse(combinatie):
     random.shuffle(combinatie.houses)
     huis1 = combinatie.houses[0]
     huis2 = combinatie.houses[1]
+    while huis1.type == huis2.type:
+        random.shuffle(combinatie.houses)
+        huis1 = combinatie.houses[0]
+        huis2 = combinatie.houses[1]
     xH1 = huis1.hoekpunt.x
     yH1 = huis1.hoekpunt.y
     xH2 = huis2.hoekpunt.x
@@ -59,7 +63,7 @@ def swap(huis1, huis2):
     xH1 = xH2
     xH2 = tempx
     # swap y coordinates
-    tempy = yH
+    tempy = yH1
     yH1 = yH2
     yH2 = tempy
     # set new coordinates
