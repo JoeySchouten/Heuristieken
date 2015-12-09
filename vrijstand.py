@@ -29,7 +29,6 @@ def checkVrijstand(huis1, huis2):
 			return 0
 
 	# vergelijk x waarden van beide huizen
-	# als x huis 1 groter is dan x huis 2:
 	if huis1xmin > huis2xmin:
 		# huis 2 staat links
 		isLeft = True
@@ -38,7 +37,6 @@ def checkVrijstand(huis1, huis2):
 		isRight = True
 
 	# vergelijk y waarden van beide huizen
-	# als y huis 1 groter is dan y huis 2:
 	if huis1ymin > huis2ymin:
 		# huis 2 staat boven
 		isAbove = True
@@ -81,8 +79,10 @@ def checkVrijstand(huis1, huis2):
 	# anders staat huis 2 direct links of rechts van huis 1
 	else:
 		if isLeft == True:
+			# wanneer huis2 links van huis1 staat
 			vrijstand = huis1xmin - huis2xmax
 		elif isRight == True:
+			# wanneer huis2 rechts van huis1 staat
 			vrijstand = huis2xmin - huis1xmax
 		else:
 			pass

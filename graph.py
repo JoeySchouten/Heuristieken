@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-def mapMaken(huizen):
-	fig1 = plt.figure()
+def mapMaken(huizen, filename):
+	fig1 = plt.figure(2)
 	ax1 = fig1.add_subplot(111, aspect='equal')
 	plt.axis([0, 320, 0, 300])
 	plt.axis('off')
@@ -18,11 +18,5 @@ def mapMaken(huizen):
 		elif huizen[i].type == "Water":
 			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="dodgerblue", edgecolor="none"))
 
-	fig1.savefig('map.png', dpi=300, bbox_inches='tight')
-
-def graphMaken(uitkomsten):
-	plt.plot(uitkomsten)
-	plt.ylabel('Waarde in Euro\'s')
-	plt.xlabel('Iteratie')
-	plt.show()
-	plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+	fig1.savefig(filename, dpi=300, bbox_inches='tight')
+	plt.close(2)

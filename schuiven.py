@@ -1,8 +1,5 @@
-import csv
 from combination import Combination
 import random
-from graph import *
-import matplotlib.pyplot as plt
 
 def schuiven(combinatie):
     attempts = 0
@@ -18,6 +15,10 @@ def schuiven(combinatie):
             #   kies plaats om naar toe te schuiven
             newx = random.randint(hoek.x - temp, hoek.x + temp)
             newy = random.randint(hoek.y - temp, hoek.y + temp)
+            while newx - huis.minVrij < 0 or newx + huis.width + huis.minVrij > combinatie.map.width:
+                newx = random.randint(hoek.x - temp, hoek.x + temp)
+            while newy - huis.minVrij < 0 or newy + huis.length + huis.minVrij > combinatie.map.length:
+                newy = random.randint(hoek.y - temp, hoek.y + temp)
             #   indien mogelijk: verplaats
             mogelijk = True
             for i in range(1, len(combinatie.houses)):
