@@ -18,5 +18,5 @@ def mapMaken(huizen, filename):
 		elif huizen[i].type == "Water":
 			ax1.add_patch(patches.Rectangle((huizen[i].hoekpunt.x, huizen[i].hoekpunt.y), huizen[i].width, huizen[i].length, facecolor="dodgerblue", edgecolor="none"))
 
-	fig1.savefig(filename, dpi=300, bbox_inches='tight')
+	fig1.savefig(filename + '.png', dpi=300, bbox_inches='tight')
 	plt.close(2)
