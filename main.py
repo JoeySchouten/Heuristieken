@@ -146,7 +146,6 @@ elif str(sys.argv[2]) == "swappen":
     while True:
         if verwerpen > maxverwerpen:
             verwerpen = 0
-            hoogstewaarde = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
                 mapMaken(best.houses,filename)
