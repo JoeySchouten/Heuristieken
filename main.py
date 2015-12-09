@@ -49,8 +49,8 @@ maxverwerpen = 10
 verwerpen = 0
 randommapper = 500
 best = 0
-begintemperatuur = 250
-gestoldbij = 1
+begintemperatuur = 1000
+gestoldbij = 20
 # 0 = scoren op vrijstand; 1 = scoren op waarde in euro's
 criterium = 0
 
@@ -74,7 +74,7 @@ plt.figure(1)
 plt.xlabel('Iteraties')
 plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
-filename = 'output/' + str(sys.argv[1]) + str(sys.argv[2]) + '.png'
+filename = 'output/' + str(sys.argv[1]) + str(sys.argv[2])
 plt.ion()
 plt.show()
 
@@ -212,3 +212,4 @@ elif str(sys.argv[2]) == "annealingschuiven":
         plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
         if temperatuur < gestoldbij:
             mapMaken(best.houses,filename)
+            sys.exit()
