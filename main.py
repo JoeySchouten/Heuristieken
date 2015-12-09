@@ -22,7 +22,6 @@ def createRandom():
             hoogstewaarde = temp[1]
             best = combinatie
             best.evalueer()
-            uitkomsten.append(hoogstewaarde)
             #plt.plot(iteratie, hoogstewaarde, '.-r')
             plt.draw()
             plt.savefig('graph.png', dpi=300, bbox_inches='tight')
@@ -42,6 +41,7 @@ toegestanescore = ["waarde", "vrijstand"]
 aantalhuizen = int(sys.argv[1])
 aantalwater = 4
 uitkomsten = []
+iteraties = []
 hoogstewaarde = 0
 iteratie = 0
 maxverwerpen = 10
@@ -128,8 +128,9 @@ elif str(sys.argv[2]) == "schuiven":
         else:
             verwerpen +=1
         uitkomsten.append(hoogstewaarde)
+        iteraties.append(iteratie)
         plt.figure(1)
-        plt.plot(iteratie, hoogstewaarde, '.-' + graphcolour)
+        plt.plot(iteraties, uitkomsten, '.-' + graphcolour)
         if best != 0 and best.evaluatie[criterium] > hoogstewaarde:
             plt.suptitle("Hoogste huidige waarde: " + str(best.evaluatie[criterium]) + " Huidige iteratie: " + str(iteratie), fontsize=13)
         else:
