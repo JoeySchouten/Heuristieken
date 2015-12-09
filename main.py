@@ -23,7 +23,7 @@ def createRandom():
             best = combinatie
             best.evalueer()
             uitkomsten.append(hoogstewaarde)
-            plt.plot(iteratie, hoogstewaarde, '.-r')
+            #plt.plot(iteratie, hoogstewaarde, '.-r')
             plt.draw()
             plt.savefig('graph.png', dpi=300, bbox_inches='tight')
     return combinatie
@@ -106,7 +106,6 @@ elif str(sys.argv[2]) == "schuiven":
     while True:
         if verwerpen > maxverwerpen:
             verwerpen = 0
-            hoogstewaarde = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
                 mapMaken(best.houses,filename)
@@ -146,7 +145,6 @@ elif str(sys.argv[2]) == "swappen":
     while True:
         if verwerpen > maxverwerpen:
             verwerpen = 0
-            hoogstewaarde = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
                 mapMaken(best.houses,filename)
