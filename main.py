@@ -71,6 +71,7 @@ plt.figure(1)
 plt.xlabel('Iteraties')
 plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
+filename = 'output/' + str(sys.argv[1]) + str(sys.argv[2]) + '.png'
 plt.ion()
 plt.show()
 
@@ -89,15 +90,13 @@ if sys.argv[2] == "randsample":
                 hoogstewaarde = temp[criterium]
                 best = combinatie
                 best.evalueer()
-                if iteratie % randommapper == 0:
-                    filename = str(sys.argv[1]) + str(sys.argv[2])
-                    mapMaken(best.houses, filename)
+                mapMaken(best.houses, filename)
         uitkomsten.append(hoogstewaarde)
         plt.figure(1)
         plt.plot(iteratie, hoogstewaarde, '.-r')
         plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
         plt.draw()
-        plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+        plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
         iteratie += 1
 
 elif str(sys.argv[2]) == "schuiven":
@@ -110,11 +109,9 @@ elif str(sys.argv[2]) == "schuiven":
             hoogstewaarde = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
-                filename = str(sys.argv[1]) + str(sys.argv[2])
                 mapMaken(best.houses,filename)
             elif best == 0:
                 best = combinatie
-                filename = str(sys.argv[1]) + str(sys.argv[2])
                 mapMaken(best.houses, filename)
             if graphcolour == 'r':
                 graphcolour = 'b'
@@ -139,7 +136,7 @@ elif str(sys.argv[2]) == "schuiven":
         else:
             plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
         plt.draw()
-        plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+        plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
         iteratie += 1
 
 elif str(sys.argv[2]) == "swappen":
@@ -152,11 +149,9 @@ elif str(sys.argv[2]) == "swappen":
             hoogstewaarde = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
-                filename = str(sys.argv[1]) + str(sys.argv[2])
                 mapMaken(best.houses,filename)
             elif best == 0:
                 best = combinatie
-                filename = str(sys.argv[1]) + str(sys.argv[2])
                 mapMaken(best.houses, filename)
             if graphcolour == 'r':
                 graphcolour = 'b'
@@ -181,5 +176,5 @@ elif str(sys.argv[2]) == "swappen":
         else:
             plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
         plt.draw()
-        plt.savefig('graph.png', dpi=300, bbox_inches='tight')
+        plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
         iteratie += 1
