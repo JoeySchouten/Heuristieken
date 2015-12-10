@@ -1,3 +1,46 @@
+#TODO: labels/legendas grafieken en kaarten fiksen
+#       Labels e.d. toevoegen aan kaart maak functie in graph.py
+#       zorg er voor dat iig dit erop staat:
+#           welke kleur is wat; totale waarde, totale vrijstand; welke criteria
+#           hoeveel huizen; heuristiek/algoritme
+
+#TODO:  barcharts
+#       Maken bereiken voor waarden
+#       Elke iteratie: +1 voor bereik waar waarde in valt (Random)
+#       Elke nieuwe kaart: +1 voor bereik waar waarde oude kaart invalt (alle andere)
+#       Bouwen barchartfunctie (staat nu in bar.py -> verplaatsen naar graph.py)
+
+#TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
+#       Alles moet lijn-grafiek + bar-chart krijgen.
+
+#TODO: Maken grafiek koppelen aan maken kaart (dus niet elke iteratie nieuwe kaart)
+#       Als het goed is, enkel verplaatsen function calls (denk erom dat figure(1) weer focus krijgt)
+
+#TODO: schuiven+swappen bouwen
+#       20% kans op swappen; 80% op schuiven
+#           if random.randint(0,10) <= 8: schuiven
+
+#TODO: sim.anneal. swappen bouwen
+#       zie sim. anneal schuiven
+
+#TODO: sim.anneal. schuiven+swappen bouwen
+#       zie sim. anneal. schuiven
+
+#TODO: Alles Runnen (kan pas na toevoegen legendas etc. en barcharts):
+#       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
+#       (Indien nodig kan ik wel een handleiding maken)
+#           Random 20, 40, 60 Waarde + vrijstand
+#           Schuiven 20, 40, 60 Waarde + vrijstand
+#           Swappen 20, 40, 60 Waarde + vrijstand
+#           Schuiven+Swappen 20, 40, 60 Waarde + vrijstand
+#           Alles behalve Random Simulated annealing
+
+#TODO: Analyseren data voor verslag + presentatie
+#TODO: Beste methode (kaart+grafiek) selecteren per categorie (aantalhuizen + criterium)
+#TODO: Presentatie
+#TODO: Verslag
+#TODO: Opschonen code
+
 import csv
 import sys
 import random
