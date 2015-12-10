@@ -36,7 +36,7 @@ def determineRange(bakjes):
 	bereik = []
 	for i in range(len(bakjes)):
 		# de eerst die niet 0 is -> linkergrens
-		if bakjes[i] != 0 and linkergrens = None:
+		if bakjes[i] != 0 and linkergrens == None:
 			linkergrens = i
 		elif bakjes[i] == 0 and linkergrens != None:
 			rechtergrens = i

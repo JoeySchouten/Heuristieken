@@ -77,13 +77,13 @@ def informWrongUsage():
     print "Incorrect aantal huizen opgegeven. Correct gebruik:"
     print "python main.py [aantal huizen] [methode] [score]"
     print "aantal huizen: 20, 40 of 60"
-    print "methode: randsample, schuiven, swappen of annealingschuiven"
+    print "methode: randsample, schuiven, swappen, annealingschuiven of annealingswappen"
     print "score: waarde of vrijstand"
     sys.exit()
 
 # toegestane opties command line arguments
 toegestanehuizen = [20,40,60]
-toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven"]
+toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "annealingswappen"]
 toegestanescore = ["waarde", "vrijstand"]
 
 aantalhuizen = int(sys.argv[1])
@@ -97,7 +97,7 @@ verwerpen = 0
 best = 0
 
 # waarden Simulated Annealing
-begintemperatuur = 1000
+begintemperatuur = 100000
 gestoldbij = 20
 
 # 0 = scoren op vrijstand; 1 = scoren op waarde in euro's
@@ -124,7 +124,7 @@ bakjes = []
 waardeperbakje = 0
 if criterium == 1:
     waardeperbakje = 100000
-elif criterium = 0:
+elif criterium == 0:
     waardeperbakje = 0
 for i in range(50):
     bakjes.append(0)
@@ -245,13 +245,13 @@ elif str(sys.argv[2]) == "annealingschuiven":
     combinatie = createRandom()
     while True:
         iteratie += 1
+        temperatuur = begintemperatuur/iteratie
         oldcombi = combinatie
         if schuiven(combinatie) == True:
             combinatie.evalueer()
             temp = combinatie.evaluatie
             verbetering = temp[criterium] - hoogstewaarde
             if verbetering < 0:
-                temperatuur = begintemperatuur/iteratie
                 kans = math.e**(verbetering/temperatuur)*100
                 if random.random()*100 < kans:
                     # bewaar nieuwe combinatie
@@ -265,6 +265,35 @@ elif str(sys.argv[2]) == "annealingschuiven":
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if temperatuur < gestoldbij:
-            mapMaken(best.houses,filename)
+            mapMaken(combinatie.houses,filename)
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+            sys.exit()
+
+elif str(sys.argv[2]) == "annealingswappen":
+    plt.title('Amstelhaege Simulated Annealing Swappen')
+    combinatie = createRandom()
+    while True:
+        iteratie += 1
+        temperatuur = begintemperatuur/iteratie
+        oldcombi = combinatie
+        if swapHouse(combinatie) == True:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            verbetering = temp[criterium] - hoogstewaarde
+            if verbetering < 0:
+                kans = math.e**(verbetering/temperatuur)*100
+                if random.random()*100 < kans:
+                    # bewaar nieuwe combinatie
+                    pass
+                else:
+                    # houd oude combi
+                    combinatie = oldcombi
+                    combinatie.evalueer()
+                    temp = combinatie.evaluatie
+            hoogstewaarde = temp[criterium]
+        uitkomsten.append(hoogstewaarde)
+        iteraties.append(iteratie)
+        if temperatuur < gestoldbij:
+            mapMaken(combinatie.houses,filename)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
             sys.exit()
