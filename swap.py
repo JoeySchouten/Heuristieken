@@ -29,7 +29,7 @@ def swapHouse(combinatie):
         mogelijk = False
 
     if mogelijk == True:
-        for i in range(len(combinatie.houses)):
+        for i in range(2, len(combinatie.houses)):
             if checkVrijstand(huis1, combinatie.houses[i]) < huis1.minVrij:
                 mogelijk = False
             elif checkVrijstand(huis2, combinatie.houses[i]) < huis2.minVrij:
