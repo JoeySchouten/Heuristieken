@@ -36,9 +36,9 @@ def determineRange(bakjes):
 	bereik = []
 	for i in range(len(bakjes)):
 		# de eerst die niet 0 is -> linkergrens
-		if bakjes[i] != 0 and linkergrens = None:
+		if bakjes[i] != 0 and linkergrens == None:
 			linkergrens = i
-		elif bakjes[i] == 0 and linkergrens != None:
+		elif bakjes[i] == 0 and linkergrens != None and rechtergrens == None:
 			rechtergrens = i
 		elif bakjes[i] != 0 and rechtergrens != None:
 			rechtergrens = i
@@ -57,6 +57,7 @@ def createBarChart(bereik, waardeperbakje, filename):
 	for i in range(len(bereik)):
 		eindWaardes.append(bereik[i][1])
 		labellijst.append(str(bereik[i][0] * waardeperbakje) + "-" + str((bereik[i][0] + 1)*waardeperbakje))
+	plt.figure(3)
 	extraLabel= 1
 	ind = np.arange(aantalbalken)
 	width = 1
@@ -67,11 +68,11 @@ def createBarChart(bereik, waardeperbakje, filename):
 	ax.set_xticks(ind + 0.5)
 	ax.set_xticklabels(labellijst)
 
-	autolabel(rects1)
+	autolabel(rects1, ax)
 	plt.savefig(filename + 'barchart.png', dpi=300, bbox_inches='tight')
 
 
-def autolabel(rects):
+def autolabel(rects, ax):
     for rect in rects:
         height = rect.get_height()
         ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,

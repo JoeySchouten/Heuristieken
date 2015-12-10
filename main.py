@@ -124,9 +124,9 @@ bakjes = []
 waardeperbakje = 0
 if criterium == 1:
     waardeperbakje = 100000
-elif criterium = 0:
+elif criterium == 0:
     waardeperbakje = 0
-for i in range(50):
+for i in range(300):
     bakjes.append(0)
 
 # bouwen grafiek
@@ -157,13 +157,16 @@ if sys.argv[2] == "randsample":
                 best.evalueer()
                 mapMaken(best.houses, filename)
                 update = True
-        index = combinatie.evaluatie[criterium] / waardeperbakje
+        index = int(combinatie.evaluatie[criterium] / waardeperbakje)
         bakjes[index] += 1
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if update == True:
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+        if iteratie%2500 == 0:
             createBarChart(determineRange(bakjes), waardeperbakje, filename)
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+            mapMaken(best.houses, filename)
         iteratie += 1
 
 elif str(sys.argv[2]) == "schuiven":
