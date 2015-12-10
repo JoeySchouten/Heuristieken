@@ -75,12 +75,12 @@ def informWrongUsage():
     print "Incorrect aantal huizen opgegeven. Correct gebruik:"
     print "python main.py [aantal huizen] [methode] [score]"
     print "aantal huizen: 20, 40 of 60"
-    print "methode: randsample, schuiven, swappen of annealingschuiven"
+    print "methode: randsample, schuiven, swappen, annealingschuiven of annealingswappen"
     print "score: waarde of vrijstand"
     sys.exit()
 
 toegestanehuizen = [20,40,60]
-toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven"]
+toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "annealingswappen"]
 toegestanescore = ["waarde", "vrijstand"]
 aantalhuizen = int(sys.argv[1])
 aantalwater = 4
@@ -229,13 +229,13 @@ elif str(sys.argv[2]) == "annealingschuiven":
     combinatie = createRandom()
     while True:
         iteratie += 1
+        temperatuur = begintemperatuur/iteratie
         oldcombi = combinatie
         if schuiven(combinatie) == True:
             combinatie.evalueer()
             temp = combinatie.evaluatie
             verbetering = temp[criterium] - hoogstewaarde
             if verbetering < 0:
-                temperatuur = begintemperatuur/iteratie
                 kans = math.e**(verbetering/temperatuur)*100
                 if random.random()*100 < kans:
                     # bewaar nieuwe combinatie
@@ -253,5 +253,37 @@ elif str(sys.argv[2]) == "annealingschuiven":
         plt.draw()
         plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
         if temperatuur < gestoldbij:
-            mapMaken(best.houses,filename)
+            mapMaken(combinatie.houses,filename)
+            sys.exit()
+
+elif str(sys.argv[2]) == "annealingswappen":
+    plt.title('Amstelhaege Simulated Annealing Swappen')
+    combinatie = createRandom()
+    while True:
+        iteratie += 1
+        temperatuur = begintemperatuur/iteratie
+        oldcombi = combinatie
+        if swapHouse(combinatie) == True:
+            combinatie.evalueer()
+            temp = combinatie.evaluatie
+            verbetering = temp[criterium] - hoogstewaarde
+            if verbetering < 0:
+                kans = math.e**(verbetering/temperatuur)*100
+                if random.random()*100 < kans:
+                    # bewaar nieuwe combinatie
+                    pass
+                else:
+                    # houd oude combi
+                    combinatie = oldcombi
+                    combinatie.evalueer()
+                    temp = combinatie.evaluatie
+            hoogstewaarde = temp[criterium]
+        uitkomsten.append(hoogstewaarde)
+        plt.figure(1)
+        plt.plot(iteratie, hoogstewaarde, '.-' + graphcolour)
+        plt.suptitle("Huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
+        plt.draw()
+        plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
+        if temperatuur < gestoldbij:
+            mapMaken(combinatie.houses,filename)
             sys.exit()
