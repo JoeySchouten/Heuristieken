@@ -1,9 +1,6 @@
-#TODO:  barcharts
-#       Elke nieuwe kaart: +1 voor bereik waar waarde oude kaart invalt (alle andere)
-
 #TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
 #       Alles moet lijn-grafiek + bar-chart krijgen.
-#       Vrijstand heeft bug die onjuiste barchart teruggeeft
+#       Alleen nog sim.annealing
 
 #TODO: uitvogelen waarden sim. annealing etc.
 #TODO: sim.annealing opnieuw draaien indien temp. onder bepaalde waarde
@@ -180,10 +177,8 @@ elif str(sys.argv[2]) == "schuiven":
                 best = combinatie
                 mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
-            if graphcolour == 'r':
-                graphcolour = 'b'
-            else:
-                graphcolour = 'r'
+            index = int(combinatie.evaluatie[criterium] / waardeperbakje)
+            bakjes[index] += 1
             combinatie = createRandom()
         if schuiven(combinatie) == True:
             combinatie.evalueer()
@@ -198,6 +193,9 @@ elif str(sys.argv[2]) == "schuiven":
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if update == True:
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+        if iteratie%2500 == 0 and best != 0:
+            createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
         iteratie += 1
 
@@ -217,12 +215,10 @@ elif str(sys.argv[2]) == "swappen":
                 best = combinatie
                 mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
-            if graphcolour == 'r':
-                graphcolour = 'b'
-            else:
-                graphcolour = 'r'
+            index = int(combinatie.evaluatie[criterium] / waardeperbakje)
+            bakjes[index] += 1
             combinatie = createRandom()
-        if swapHouse(combinatie) == True:
+        if swappen(combinatie) == True:
             combinatie.evalueer()
             temp = combinatie.evaluatie
             if temp[criterium] > hoogstewaarde:
@@ -235,6 +231,9 @@ elif str(sys.argv[2]) == "swappen":
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if update == True:
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+        if iteratie%2500 == 0 and best != 0:
+            createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
         iteratie += 1
 
