@@ -3,7 +3,7 @@ import random
 from vrijstand import checkVrijstand
 
 # function to swap a house
-def swapHouse(combinatie):
+def swappen(combinatie):
     random.shuffle(combinatie.houses)
     huis1 = combinatie.houses[0]
     huis2 = combinatie.houses[1]
