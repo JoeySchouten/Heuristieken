@@ -115,7 +115,7 @@ waardeperbakje = 0
 if criterium == 1:
     waardeperbakje = 250000
 elif criterium == 0:
-    waardeperbakje = 0
+    waardeperbakje = 50
 for i in range(300):
     bakjes.append(0)
 
@@ -125,7 +125,7 @@ plt.figure(1)
 plt.xlabel('Iteraties')
 plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
-filename = 'output/' + str(sys.argv[1]) + str(sys.argv[2])
+filename = 'output/' + str(sys.argv[3]) + "/" + str(sys.argv[1]) + str(sys.argv[2])
 graphtitle = str(sys.argv[2]) + " " + str(sys.argv[1])
 plt.ion()
 plt.show()
