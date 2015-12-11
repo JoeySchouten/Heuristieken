@@ -3,6 +3,7 @@
 
 #TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
 #       Alles moet lijn-grafiek + bar-chart krijgen.
+#       Vrijstand heeft bug die onjuiste barchart teruggeeft
 
 #TODO: uitvogelen waarden sim. annealing etc.
 #TODO: sim.annealing opnieuw draaien indien temp. onder bepaalde waarde
@@ -112,11 +113,14 @@ if str(sys.argv[3]) == "waarde":
 # barchart waarden
 bakjes = []
 waardeperbakje = 0
+aantalbakjes = 0
 if criterium == 1:
     waardeperbakje = 250000
+    aantalbakjes = 500
 elif criterium == 0:
-    waardeperbakje = 50
-for i in range(300):
+    waardeperbakje = 25
+    aantalbakjes = 30
+for i in range(aantalbakjes):
     bakjes.append(0)
 
 # bouwen grafiek
@@ -127,8 +131,8 @@ plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
 filename = 'output/' + str(sys.argv[3]) + "/" + str(sys.argv[1]) + str(sys.argv[2])
 graphtitle = str(sys.argv[2]) + " " + str(sys.argv[1])
-plt.ion()
-plt.show()
+#plt.ion()
+#plt.show()
 
 if sys.argv[2] == "randsample":
     plt.title('Amstelhaege Random Sampling')

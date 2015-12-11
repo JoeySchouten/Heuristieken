@@ -4,10 +4,12 @@ import numpy as np
 
 def updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde):
 	plt.figure(1)
-	plt.plot(iteraties, uitkomsten, '-r')
+	plt.plot(iteraties, uitkomsten, '-', color='steelblue')
 	plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
 	plt.draw()
 	plt.savefig(filename + 'graph.png', dpi=300, bbox_inches='tight')
+	plt.close(1)
+	print "Grafiek bijgewerkt tot iteratie " + str(iteratie) + ". Hoogste Waarde: " + str(hoogstewaarde)
 
 def mapMaken(huizen, filename, graphtitle, iteratie, hoogstewaarde):
 	fig1 = plt.figure(2)
@@ -16,6 +18,7 @@ def mapMaken(huizen, filename, graphtitle, iteratie, hoogstewaarde):
 	ax1.set_title("Uitkomst: " + str(hoogstewaarde) + " Iteratie: " + str(iteratie))
 	plt.axis([0, 320, 0, 300])
 	plt.axis('off')
+	print "Kaart gemaakt!"
 
 	# Shrink current axis by 20%
 	box = ax1.get_position()
@@ -89,6 +92,7 @@ def createBarChart(bereik, waardeperbakje, filename, graphtitle, criterium, iter
 	autolabel(rects1, ax)
 	plt.savefig(filename + 'barchart.png', dpi=300, bbox_inches='tight')
 	plt.close()
+	print "Barchart bijgewerkt tot iteratie " + str(iteratie)
 
 
 def autolabel(rects, ax):
