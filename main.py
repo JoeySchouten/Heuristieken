@@ -18,9 +18,6 @@
 #       20% kans op swappen; 80% op schuiven
 #           if random.randint(0,10) <= 8: schuiven
 
-#TODO: sim.anneal. swappen bouwen
-#       zie sim. anneal schuiven
-
 #TODO: sim.anneal. schuiven+swappen bouwen
 #       zie sim. anneal. schuiven
 
