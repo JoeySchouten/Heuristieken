@@ -1,10 +1,3 @@
-#TODO: labels/legendas grafieken en kaarten fiksen
-#       Labels e.d. toevoegen aan kaart maak functie in graph.py
-#       Labels e.d. toevoegen aan bargraphfunctie in graph.py
-#       zorg er voor dat iig dit erop staat:
-#           welke kleur is wat; totale waarde, totale vrijstand; welke criteria
-#           hoeveel huizen; heuristiek/algoritme
-
 #TODO:  barcharts
 #       Elke nieuwe kaart: +1 voor bereik waar waarde oude kaart invalt (alle andere)
 
@@ -23,9 +16,6 @@
 
 #TODO: sim.anneal. schuiven+swappen bouwen
 #       zie sim. anneal. schuiven
-
-#TODO: ALLES TESTEN OP vrijstand
-#       WAARDE PER BAKJE MOET OOK GEDEFINEERD WORDEN
 
 #TODO: Alles Runnen (kan pas na toevoegen legendas etc. en barcharts):
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
@@ -123,10 +113,10 @@ if str(sys.argv[3]) == "waarde":
 bakjes = []
 waardeperbakje = 0
 if criterium == 1:
-    waardeperbakje = 100000
-elif criterium = 0:
-    waardeperbakje = 0
-for i in range(50):
+    waardeperbakje = 250000
+elif criterium == 0:
+    waardeperbakje = 50
+for i in range(300):
     bakjes.append(0)
 
 # bouwen grafiek
@@ -135,7 +125,8 @@ plt.figure(1)
 plt.xlabel('Iteraties')
 plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
-filename = 'output/' + str(sys.argv[1]) + str(sys.argv[2])
+filename = 'output/' + str(sys.argv[3]) + "/" + str(sys.argv[1]) + str(sys.argv[2])
+graphtitle = str(sys.argv[2]) + " " + str(sys.argv[1])
 plt.ion()
 plt.show()
 
@@ -155,15 +146,18 @@ if sys.argv[2] == "randsample":
                 hoogstewaarde = temp[criterium]
                 best = combinatie
                 best.evalueer()
-                mapMaken(best.houses, filename)
+                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
-        index = combinatie.evaluatie[criterium] / waardeperbakje
+        index = int(combinatie.evaluatie[criterium] / waardeperbakje)
         bakjes[index] += 1
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if update == True:
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
-            createBarChart(determineRange(bakjes), waardeperbakje, filename)
+        if iteratie%2500 == 0:
+            createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+            mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
         iteratie += 1
 
 elif str(sys.argv[2]) == "schuiven":
@@ -176,11 +170,11 @@ elif str(sys.argv[2]) == "schuiven":
             verwerpen = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
-                mapMaken(best.houses,filename)
+                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
             elif best == 0:
                 best = combinatie
-                mapMaken(best.houses, filename)
+                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
             if graphcolour == 'r':
                 graphcolour = 'b'
@@ -213,11 +207,11 @@ elif str(sys.argv[2]) == "swappen":
             verwerpen = 0
             if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
                 best = combinatie
-                mapMaken(best.houses,filename)
+                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
             elif best == 0:
                 best = combinatie
-                mapMaken(best.houses, filename)
+                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
             if graphcolour == 'r':
                 graphcolour = 'b'
@@ -265,6 +259,6 @@ elif str(sys.argv[2]) == "annealingschuiven":
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if temperatuur < gestoldbij:
-            mapMaken(best.houses,filename)
+            mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
             sys.exit()
