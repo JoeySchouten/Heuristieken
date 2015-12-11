@@ -76,7 +76,7 @@ uitkomsten = []
 iteraties = []
 hoogstewaarde = 0
 iteratie = 0
-maxverwerpen = 10
+maxverwerpen = 100
 verwerpen = 0
 best = 0
 
