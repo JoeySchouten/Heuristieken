@@ -14,10 +14,14 @@
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Random 20, 40, 60 Waarde + vrijstand
-#           Schuiven 20, 40, 60 Waarde + vrijstand
-#           Swappen 20, 40, 60 Waarde + vrijstand
-#           Schuiven+Swappen 20, 40, 60 Waarde + vrijstand
+#           Randsample vrijstand:                   40(Kayleigh)    60(Jordi)
+#           Randsample waarde:                                      60(Jordi)
+#           Schuiven vrijstand:                     40(Joey)        60(Jordi?)
+#           Schuiven waarde:        20(Joey)        40              60(Jordi?)
+#           Swappen vrijstand:      20              40              60
+#           Swappen waarde:         20              40              60
+#           Schuiven+Swappen vrijstand: 20, 40, 60
+#           Schuiven+Swappen waarde: 20, 40, 60
 #           Alles behalve Random Simulated annealing
 
 #TODO: Analyseren data voor verslag + presentatie
