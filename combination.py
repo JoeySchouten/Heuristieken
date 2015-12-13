@@ -58,8 +58,8 @@ class Combination(object):
         if bodies > 0:
             self.watersizes = self.randWaterCalc(bodies)
             self.setWaterSizes(self.watersizes)
-        self.evaluatie = []
-        
+        self.evaluatie = [0,0]
+
     # funtie voor het berekenen van de vrijstand van 1 huis
     def geefVrijstand(self, huis, index):
         vrijstand = 2000
