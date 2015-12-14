@@ -11,10 +11,9 @@
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Randsample vrijstand:                   40(nu bezig)
 #           Randsample waarde:                                      60(Jordi)
-#           Schuiven vrijstand:                     40(Joey)        60(Jordi?)
-#           Schuiven waarde:                        40              60(Jordi?)
+#           Schuiven vrijstand:                     40(Nu bezig)    60(Jordi)
+#           Schuiven waarde:                        40(Kayleigh)    60(Jordi)
 #           Swappen vrijstand:      20              40              60
 #           Swappen waarde:         20              40              60
 #           Schuiven+Swappen vrijstand: 20, 40, 60
@@ -38,6 +37,7 @@ import sys
 import random
 import matplotlib.pyplot as plt
 import math
+import copy
 from combination import Combination
 from graph import *
 from schuiven import schuiven
@@ -72,12 +72,15 @@ def informWrongUsage():
 
 def annealingKans(nieuw, oud, temperatuur):
     # bereken verschil, wanneer de nieuwe lager is dan de oude -> negatieve waarde
+    # bijv nieuw = 20, oud = 25, verschil is -5
     verschil = nieuw - oud
     #wanneer nieuwe beter is dan oude (hoger dus), sowieso aannemen
     if verschil > 0:
-        return 1.0
+        kans = 1.0
     else:
-        return math.exp(verschil/temperatuur)
+        kans = (math.exp(verschil/temperatuur))
+    print kans
+    return kans
 
 # toegestane opties command line arguments
 toegestanehuizen = [20,40,60]
@@ -297,22 +300,21 @@ elif str(sys.argv[2]) == "schuifswap":
 elif str(sys.argv[2]) == "annealingschuiven":
     plt.title('Amstelhaege Simulated Annealing Schuiven')
     combinatie = createRandom()
+    oldcombi = copy.deepcopy(combinatie)
     while True:
         iteratie += 1
-        oldcombi = combinatie
         if schuiven(combinatie) == True:
             combinatie.evalueer()
-            temp = combinatie.evaluatie
-            kans = annealingKans(temp[criterium], oldcombi.evaluatie[criterium], temperatuur)
-            if random.random() <= kans:
+            kans = annealingKans(combinatie.evaluatie[criterium], oldcombi.evaluatie[criterium], temperatuur)
+            if random.random() < kans:
                 # bewaar nieuwe combinatie
-                pass
+                oldcombi = copy.deepcopy(combinatie)
             else:
                 # houd oude combi
-                combinatie = oldcombi
+                combinatie = copy.deepcopy(oldcombi)
                 combinatie.evalueer()
                 temp = combinatie.evaluatie
-            hoogstewaarde = temp[criterium]
+            hoogstewaarde = combinatie.evaluatie[criterium]
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if temperatuur < gestoldbij:
