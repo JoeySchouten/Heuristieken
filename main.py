@@ -7,6 +7,7 @@
 #       zie sim. anneal schuiven
 #TODO: sim.anneal. schuiven+swappen bouwen
 #       zie sim. anneal. schuiven
+
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
@@ -29,7 +30,7 @@
 #                   60
 #TODO: Presentatie
 #TODO: Verslag
-#TODO: Opschonen code
+#TODO: Opschonen code?
 #       Code is mix v. Nederlands en Engels; pick one? Of is dat onnodig?
 
 import csv
@@ -69,6 +70,15 @@ def informWrongUsage():
     print "score: waarde of vrijstand"
     sys.exit()
 
+def annealingKans(nieuw, oud, temperatuur):
+    # bereken verschil, wanneer de nieuwe lager is dan de oude -> negatieve waarde
+    verschil = nieuw - oud
+    #wanneer nieuwe beter is dan oude (hoger dus), sowieso aannemen
+    if verschil > 0:
+        return 1.0
+    else:
+        return math.exp(verschil/temperatuur)
+
 # toegestane opties command line arguments
 toegestanehuizen = [20,40,60]
 toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "schuifswap" ]
@@ -85,13 +95,12 @@ verwerpen = 0
 best = 0
 
 # waarden Simulated Annealing
-begintemperatuur = 1000
+temperatuur = 10000
+afkoeling = 0.0003
 gestoldbij = 20
 
 # 0 = scoren op vrijstand; 1 = scoren op waarde in euro's
 criterium = 0
-
-
 
 #  afvangen hoeveelheid arguments!
 if len(sys.argv) != 4:
@@ -128,8 +137,6 @@ plt.ylabel('Waarde in Euro\'s')
 plt.suptitle("Hoogste huidige waarde: " + str(hoogstewaarde) + " Huidige iteratie: " + str(iteratie), fontsize=13)
 filename = 'output/' + str(sys.argv[3]) + "/" + str(sys.argv[1]) + str(sys.argv[2])
 graphtitle = str(sys.argv[2]) + " " + str(sys.argv[1])
-#plt.ion()
-#plt.show()
 
 if sys.argv[2] == "randsample":
     plt.title('Amstelhaege Random Sampling')
@@ -296,22 +303,21 @@ elif str(sys.argv[2]) == "annealingschuiven":
         if schuiven(combinatie) == True:
             combinatie.evalueer()
             temp = combinatie.evaluatie
-            verbetering = temp[criterium] - hoogstewaarde
-            if verbetering < 0:
-                temperatuur = begintemperatuur/iteratie
-                kans = math.e**(verbetering/temperatuur)*100
-                if random.random()*100 < kans:
-                    # bewaar nieuwe combinatie
-                    pass
-                else:
-                    # houd oude combi
-                    combinatie = oldcombi
-                    combinatie.evalueer()
-                    temp = combinatie.evaluatie
+            kans = annealingKans(temp[criterium], oldcombi.evaluatie[criterium], temperatuur)
+            if random.random() <= kans:
+                # bewaar nieuwe combinatie
+                pass
+            else:
+                # houd oude combi
+                combinatie = oldcombi
+                combinatie.evalueer()
+                temp = combinatie.evaluatie
             hoogstewaarde = temp[criterium]
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if temperatuur < gestoldbij:
-            mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
+            mapMaken(combinatie.houses, filename, graphtitle, iteratie, hoogstewaarde)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
             sys.exit()
+        else:
+            temperatuur *= 1-afkoeling
