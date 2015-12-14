@@ -1,31 +1,32 @@
 #TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
 #       Alles moet lijn-grafiek + bar-chart krijgen.
 #       Alleen nog sim.annealing
-
 #TODO: uitvogelen waarden sim. annealing etc.
 #TODO: sim.annealing opnieuw draaien indien temp. onder bepaalde waarde
-
 #TODO: sim.anneal. swappen bouwen
 #       zie sim. anneal schuiven
-
 #TODO: sim.anneal. schuiven+swappen bouwen
 #       zie sim. anneal. schuiven
-
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Randsample vrijstand:                   40(Kayleigh)    60(Jordi)
+#           Randsample vrijstand:                   40(nu bezig)
 #           Randsample waarde:                                      60(Jordi)
 #           Schuiven vrijstand:                     40(Joey)        60(Jordi?)
-#           Schuiven waarde:        20(Joey)        40              60(Jordi?)
+#           Schuiven waarde:                        40              60(Jordi?)
 #           Swappen vrijstand:      20              40              60
 #           Swappen waarde:         20              40              60
 #           Schuiven+Swappen vrijstand: 20, 40, 60
 #           Schuiven+Swappen waarde: 20, 40, 60
 #           Alles behalve Random Simulated annealing
-
 #TODO: Analyseren data voor verslag + presentatie
 #TODO: Beste methode (kaart+grafiek) selecteren per categorie (aantalhuizen + criterium)
+#       Vrijstand:  20
+#                   40
+#                   60
+#       Waarde:     20
+#                   40
+#                   60
 #TODO: Presentatie
 #TODO: Verslag
 #TODO: Opschonen code
@@ -56,7 +57,6 @@ def createRandom():
             hoogstewaarde = temp[1]
             best = combinatie
             best.evalueer()
-            #plt.plot(iteratie, hoogstewaarde, '.-r')
             plt.draw()
             plt.savefig('graph.png', dpi=300, bbox_inches='tight')
     return combinatie
@@ -150,7 +150,8 @@ if sys.argv[2] == "randsample":
                 mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
                 update = True
         index = int(combinatie.evaluatie[criterium] / waardeperbakje)
-        bakjes[index] += 1
+        if error != True:
+            bakjes[index] += 1
         uitkomsten.append(hoogstewaarde)
         iteraties.append(iteratie)
         if update == True:
