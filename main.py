@@ -12,7 +12,7 @@
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
 #           Randsample waarde:                                      60(Jordi)
-#           Schuiven vrijstand:                     40(Nu bezig)    60(Jordi)
+#           Schuiven vrijstand:                                     60(Jordi)
 #           Schuiven waarde:                        40(Kayleigh)    60(Jordi)
 #           Swappen vrijstand:      20              40              60
 #           Swappen waarde:         20              40              60
