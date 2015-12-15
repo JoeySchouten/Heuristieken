@@ -47,6 +47,7 @@ def createRandom():
         error = False
         # probeer random kaart te bouwen tot het lukt
         combinatie = Combination(aantalhuizen, aantalwater)
+        random.shuffle(combinatie.houses)
         for i in range(len(combinatie.houses)):
             if combinatie.placeRandom(combinatie.houses[i], i) != True:
                 error = True
