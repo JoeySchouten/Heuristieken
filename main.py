@@ -1,8 +1,8 @@
 #TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
-#       Alles moet lijn-grafiek + bar-chart krijgen.
-#       Alleen nog sim.annealing
+#       Sim. annealing extra chart voor specifieke kaart
+
 #TODO: uitvogelen waarden sim. annealing etc.
-#TODO: sim.annealing opnieuw draaien indien temp. onder bepaalde waarde
+
 #TODO: sim.anneal. swappen bouwen
 #       zie sim. anneal schuiven
 #TODO: sim.anneal. schuiven+swappen bouwen
@@ -11,7 +11,7 @@
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Randsample waarde:                                      60(Kayleigh)
+#           Randsample waarde:                                      60(Jordi)
 #           Swappen vrijstand:                      40              60
 #           Swappen waarde:         20(Nu bezig)    40              60
 #           Schuiven+Swappen vrijstand: 20, 40, 60
@@ -77,12 +77,12 @@ def annealingKans(nieuw, oud, temperatuur):
         kans = 1.0
     else:
         kans = (math.exp(verschil/temperatuur))
-    print kans
+    #print kans
     return kans
 
 # toegestane opties command line arguments
 toegestanehuizen = [20,40,60]
-toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "schuifswap" ]
+toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "schuifswap"]
 toegestanescore = ["waarde", "vrijstand"]
 
 aantalhuizen = int(sys.argv[1])
@@ -96,9 +96,9 @@ verwerpen = 0
 best = 0
 
 # waarden Simulated Annealing
-temperatuur = 10000
-afkoeling = 0.0003
-gestoldbij = 20
+begintemperatuur = 150
+afkoeling = 0.012
+gestoldbij = 10
 
 # 0 = scoren op vrijstand; 1 = scoren op waarde in euro's
 criterium = 0
@@ -297,27 +297,42 @@ elif str(sys.argv[2]) == "schuifswap":
 
 elif str(sys.argv[2]) == "annealingschuiven":
     plt.title('Amstelhaege Simulated Annealing Schuiven')
-    combinatie = createRandom()
-    oldcombi = copy.deepcopy(combinatie)
     while True:
-        iteratie += 1
-        if schuiven(combinatie) == True:
-            combinatie.evalueer()
-            kans = annealingKans(combinatie.evaluatie[criterium], oldcombi.evaluatie[criterium], temperatuur)
-            if random.random() < kans:
-                # bewaar nieuwe combinatie
-                oldcombi = copy.deepcopy(combinatie)
-            else:
-                # houd oude combi
-                combinatie = copy.deepcopy(oldcombi)
+        combinatie = createRandom()
+        oldcombi = copy.deepcopy(combinatie)
+        temperatuur = begintemperatuur
+        huidigewaarden = []
+        huidigeiteraties = []
+        while temperatuur > gestoldbij:
+            update = False
+            iteratie += 1
+            if iteratie%4500 == 0:
+                update = True
+            if schuiven(combinatie) == True:
                 combinatie.evalueer()
-                temp = combinatie.evaluatie
-            hoogstewaarde = combinatie.evaluatie[criterium]
-        uitkomsten.append(hoogstewaarde)
-        iteraties.append(iteratie)
-        if temperatuur < gestoldbij:
-            mapMaken(combinatie.houses, filename, graphtitle, iteratie, hoogstewaarde)
-            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
-            sys.exit()
-        else:
+                kans = annealingKans(combinatie.evaluatie[criterium], oldcombi.evaluatie[criterium], temperatuur)
+                if random.random() < kans:
+                    # bewaar nieuwe combinatie
+                    oldcombi = copy.deepcopy(combinatie)
+                else:
+                    # houd oude combi
+                    combinatie = copy.deepcopy(oldcombi)
+                    combinatie.evalueer()
+                    temp = combinatie.evaluatie
+                hoogstewaarde = combinatie.evaluatie[criterium]
+            uitkomsten.append(hoogstewaarde)
+            iteraties.append(iteratie)
+            huidigewaarden.append(hoogstewaarde)
+            huidigeiteraties.append(iteratie)
             temperatuur *= 1-afkoeling
+        if best == 0:
+            best = oldcombi
+        if oldcombi.evaluatie[criterium] >= best.evaluatie[criterium]:
+            best = oldcombi
+            mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
+            updateGraph(filename + "single", huidigeiteraties, iteratie, huidigewaarden, hoogstewaarde)
+            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
+        index = int(combinatie.evaluatie[criterium] / waardeperbakje)
+        bakjes[index] += 1
+        if update == True:
+            createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
