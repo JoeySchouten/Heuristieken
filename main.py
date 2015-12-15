@@ -11,11 +11,9 @@
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Randsample waarde:                                      60(Jordi)
-#           Schuiven vrijstand:                                     60(Jordi)
-#           Schuiven waarde:                        40(Kayleigh)    60(Jordi)
-#           Swappen vrijstand:      20              40              60
-#           Swappen waarde:         20              40              60
+#           Randsample waarde:                                      60(Kayleigh)
+#           Swappen vrijstand:                      40              60
+#           Swappen waarde:         20(Nu bezig)    40              60
 #           Schuiven+Swappen vrijstand: 20, 40, 60
 #           Schuiven+Swappen waarde: 20, 40, 60
 #           Alles behalve Random Simulated annealing
@@ -166,7 +164,7 @@ if sys.argv[2] == "randsample":
         iteraties.append(iteratie)
         if update == True:
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
-        if iteratie%2500 == 0:
+        if iteratie%2500 == 0 and best != 0:
             createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
             mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
