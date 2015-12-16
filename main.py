@@ -1,29 +1,4 @@
-#TODO: Alle grafieken e.d. goed krijgen voor alle algoritmes
-#       Sim. annealing extra chart voor specifieke kaart
-
-#TODO: uitvogelen waarden sim. annealing etc.
-
-#TODO: sim.anneal. swappen bouwen
-#       zie sim. anneal schuiven
-#TODO: sim.anneal. schuiven+swappen bouwen
-#       zie sim. anneal. schuiven
-
-#TODO: Alles Runnen:
-#       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
-#       (Indien nodig kan ik wel een handleiding maken)
-#           Swappen vrijstand:                      40              60
-#           Swappen waarde:         20(Nu bezig)    40              60
-#           Schuiven+Swappen vrijstand: 20, 40, 60
-#           Schuiven+Swappen waarde: 20, 40, 60
-#           Alles behalve Random Simulated annealing
 #TODO: Analyseren data voor verslag + presentatie
-#TODO: Beste methode (kaart+grafiek) selecteren per categorie (aantalhuizen + criterium)
-#       Vrijstand:  20
-#                   40
-#                   60
-#       Waarde:     20
-#                   40
-#                   60
 #TODO: Presentatie
 #TODO: Verslag
 #TODO: Opschonen code?
