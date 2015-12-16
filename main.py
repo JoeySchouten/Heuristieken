@@ -11,7 +11,6 @@
 #TODO: Alles Runnen:
 #       (Vraag desnoods familie/vrienden of zij het programma kunnen draaien een nachtje)
 #       (Indien nodig kan ik wel een handleiding maken)
-#           Randsample waarde:                                      60(Jordi)
 #           Swappen vrijstand:                      40              60
 #           Swappen waarde:         20(Nu bezig)    40              60
 #           Schuiven+Swappen vrijstand: 20, 40, 60
@@ -300,6 +299,7 @@ elif str(sys.argv[2]) == "annealingschuiven":
     plt.title('Amstelhaege Simulated Annealing Schuiven')
     while True:
         combinatie = createRandom()
+        random.shuffle(combinatie)
         oldcombi = copy.deepcopy(combinatie)
         temperatuur = begintemperatuur
         huidigewaarden = []
