@@ -297,9 +297,11 @@ elif str(sys.argv[2]) == "schuifswap":
 
 elif str(sys.argv[2]) == "annealingschuiven":
     plt.title('Amstelhaege Simulated Annealing Schuiven')
+    olddelta = 0
+    delta = 0
     while True:
         combinatie = createRandom()
-        random.shuffle(combinatie)
+        random.shuffle(combinatie.houses)
         oldcombi = copy.deepcopy(combinatie)
         temperatuur = begintemperatuur
         huidigewaarden = []
@@ -311,10 +313,15 @@ elif str(sys.argv[2]) == "annealingschuiven":
                 update = True
             if schuiven(combinatie) == True:
                 combinatie.evalueer()
-                kans = annealingKans(combinatie.evaluatie[criterium], oldcombi.evaluatie[criterium], temperatuur)
+                if criterium == 1:
+                    delta = int(combinatie.evaluatie[criterium] / 25000)
+                    kans = annealingKans(delta, olddelta, temperatuur)
+                else:
+                    kans = annealingKans(combinatie.evaluatie[criterium], oldcombi.evaluatie[criterium], temperatuur)
                 if random.random() < kans:
                     # bewaar nieuwe combinatie
                     oldcombi = copy.deepcopy(combinatie)
+                    olddelta = copy.copy(delta)
                 else:
                     # houd oude combi
                     combinatie = copy.deepcopy(oldcombi)
