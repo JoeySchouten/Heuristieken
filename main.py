@@ -1,10 +1,3 @@
-#TODO: Analyseren data voor verslag + presentatie
-#TODO: Presentatie
-#TODO: Verslag
-#TODO: Opschonen code?
-#       Code is mix v. Nederlands en Engels; pick one? Of is dat onnodig?
-
-import csv
 import sys
 import random
 import matplotlib.pyplot as plt
@@ -57,7 +50,7 @@ def annealingKans(nieuw, oud, temperatuur):
 
 # toegestane opties command line arguments
 toegestanehuizen = [20,40,60]
-toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven", "schuifswap"]
+toegestanemethoden = ["randsample", "schuiven", "swappen", "annealingschuiven"]
 toegestanescore = ["waarde", "vrijstand"]
 
 aantalhuizen = int(sys.argv[1])
@@ -217,55 +210,6 @@ elif str(sys.argv[2]) == "swappen":
         if update == True:
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
         if iteratie%2500 == 0 and best != 0:
-            createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
-            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
-        iteratie += 1
-
-elif str(sys.argv[2]) == "schuifswap":
-    plt.title('Amstelhaege Schuif-Swap-Hillclimber')
-    combinatie = createRandom()
-    # ga swappen
-    while True:
-        update = False
-        gelukt = False
-        if verwerpen > maxverwerpen:
-            verwerpen = 0
-            if best != 0 and best.evaluatie[criterium] < combinatie.evaluatie[criterium]:
-                best = combinatie
-                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
-                update = True
-            elif best == 0:
-                best = combinatie
-                mapMaken(best.houses, filename, graphtitle, iteratie, hoogstewaarde)
-                update = True
-            index = int(combinatie.evaluatie[criterium] / waardeperbakje)
-            bakjes[index] += 1
-            combinatie = createRandom()
-
-        # 20% swappen, 80% schuiven
-        kans = random.randint(0,10)
-        if kans < 8:
-            if schuiven(combinatie) == True:
-                gelukt = True
-        else:
-            if swappen(combinatie) == True:
-                gelukt = True
-
-        if gelukt == True:
-            combinatie.evalueer()
-            temp = combinatie.evaluatie
-            if temp[criterium] > hoogstewaarde:
-                hoogstewaarde = temp[criterium]
-                verwerpen = 0
-            else:
-                verwerpen +=1
-        else:
-            verwerpen +=1
-        uitkomsten.append(hoogstewaarde)
-        iteraties.append(iteratie)
-        if update == True:
-            updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
-        if iteratie%500 == 0 and best != 0:
             createBarChart(determineRange(bakjes), waardeperbakje, filename, graphtitle, criterium, iteratie)
             updateGraph(filename, iteraties, iteratie, uitkomsten, hoogstewaarde)
         iteratie += 1
